@@ -8,7 +8,7 @@ router.post("/login" , async(req , res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
-    let user = await User.findOne({ email: req.body.email});
+    let user = await User.findOne({ id: req.body.id});
     if(!user) return res.status(400).send("Invalid ID or Password");
 
     const validPassword = await bcrypt.compare(req.body.password , user.password);
@@ -19,12 +19,44 @@ router.post("/login" , async(req , res) => {
     res.setHeader('Content-Type' , 'application/json');
     res.json(token);
 });
+router.post("/reset" , async(req , res) => {
+    const { error } = ValidateResetPassword(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
+    let user = await User.findOne({ id: req.body.id});
+    if(!user) return res.status(400).send("Invalid ID or Password");
+
+    const validPassword = await bcrypt.compare(req.body.password , user.password);
+    if(!validPassword) return res.status(400).send("Invalid ID or Password");
+
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(user.password , salt);
+    const user = await User.findByIdAndUpdate(user._id , {
+        password: newPassword
+    },{
+        new: true
+    });
+    if(!user) return res.status(400).send("ERROR - Password Didn't Changed!");
+    return res.status(200).send(user);    
+
+
+});
+function ValidateResetPassword(req){
+    const schema = {
+        id: Joi.number().required(),
+        password: Joi.string().min(5).max(255).required(),
+        newPassword: Joi.string().min(5).max(255).required()
+    };
+    return Joi.validate(req , schema);
+        
+}
 function validate(req){
     const schema = {
-        id: Joi.number().requiredd(),
+        id: Joi.number().required(),
         password: Joi.string().min(5).max(255).required()
     };
     return Joi.validate(req , schema);
 }
 module.exports = router;
+
+
