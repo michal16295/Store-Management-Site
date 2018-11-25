@@ -78,6 +78,9 @@ class App extends Component {
                 />
               </div>
               <button>Submit</button>
+              {this.state.error ? (
+                <h4 id="error">Invalid password or Username</h4>
+              ) : null}
             </form>
             <div>
               <button onClick={this.changePassword}>Change Password</button>
@@ -97,9 +100,6 @@ class App extends Component {
           ) : (
             <h4>You are not logged in</h4>
           )}
-          {this.state.error ? (
-            <h4 id="error">Invalid possword or Username</h4>
-          ) : null}
         </div>
       </div>
     );
