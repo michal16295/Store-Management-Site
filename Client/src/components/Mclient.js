@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Mcli extends Component {
+class Mclient extends Component {
   render() {
     return (
       <div>
@@ -21,5 +21,5 @@ class Mcli extends Component {
 }
 
 //ReactDOM.render(<mainMenuClient />, document.getElementById("root"));
-export default Mcli;
+export default Mclient;
 // Learn more about service workers: http://bit.ly/CRA-PWA
