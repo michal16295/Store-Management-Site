@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./App.scss";
 
 class App extends Component {
   state = {
@@ -17,6 +17,7 @@ class App extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
   onSubmit = e => {
     e.preventDefault();
     let id = this.state.id;
@@ -53,41 +54,52 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.auth == false ? (
-          <form onSubmit={this.onSubmit}>
+          <div>
+            <h1>Welcome to ATMD Please log-in</h1>
+            <form class="submission-form" onSubmit={this.onSubmit}>
+              <div>
+                <label htmlFor="id">Username</label>
+                <input
+                  name="id"
+                  value={this.state.id}
+                  onChange={this.onChange}
+                  type="text"
+                  required="true"
+                />
+              </div>
+              <div>
+                <label htmlFor="password">Password</label>
+                <input
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  type="password"
+                  required="true"
+                />
+              </div>
+              <button>Submit</button>
+            </form>
             <div>
-              <label htmlFor="id">Username</label>
-              <input
-                name="id"
-                value={this.state.id}
-                onChange={this.onChange}
-                type="text"
-                required="true"
-              />
+              <button onClick={this.changePassword}>Change Password</button>
             </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                type="password"
-                required="true"
-              />
-            </div>
-            <button>Submit</button>
-          </form>
+          </div>
         ) : null}
 
         <div>
           {this.state.auth ? (
             <div>
-              <h4>Welcome {this.state.firstName} </h4>
+              <h1>
+                Welcome {this.state.firstName} {this.state.lastName}
+              </h1>
+              <h4>Your role is : {this.state.role}</h4>
               <button onClick={this.logout}>Log out</button>
             </div>
           ) : (
             <h4>You are not logged in</h4>
           )}
-          {this.state.error ? <h4>Invalid possword or User Id</h4> : null}
+          {this.state.error ? (
+            <h4 id="error">Invalid possword or Username</h4>
+          ) : null}
         </div>
       </div>
     );
