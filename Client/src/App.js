@@ -1,25 +1,4 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
-=======
-import Login from "./components/Login";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Mclient from "./components/Mclient";
-=======
-
->>>>>>> 6613ebdf4f5540a1b645185927ecd304b2d51dba
-=======
-import Mclient from "./components/Mclient";
->>>>>>> c84dafeef82a8b1be933e9bb953f1e4f0c93b061
->>>>>>> d5cc4234a1780fb90eede6023c6c4157d1682688
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
-import Login from "./components/Login";
 import "./App.css";
 
 class App extends Component {
