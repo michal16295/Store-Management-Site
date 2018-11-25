@@ -19,15 +19,11 @@ router.post("/login" , async(req , res) => {
     res.setHeader('Content-Type' , 'application/json');
     const response = {
         token: token,
-        userId: user._id,
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role
     };
-    if (user.role === 'customer') {
-        response.points = user.points;
-    }
     res.json(response);
 });
 router.post("/reset" , async(req, res) => {
