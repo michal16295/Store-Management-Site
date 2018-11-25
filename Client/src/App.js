@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
+<<<<<<< HEAD
+import Mclient from "./components/Mclient";
+=======
 
+>>>>>>> 6613ebdf4f5540a1b645185927ecd304b2d51dba
 import {
   BrowserRouter as Router,
   Route,
