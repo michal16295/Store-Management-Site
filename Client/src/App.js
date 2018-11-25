@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./App.scss";
 import ChangePass from "./components/ChangePass";
+import MManager from "./components/MManager";
+import Mworker from "./components/Mworker";
+import Mclient from "./components/Mclient";
 class App extends Component {
   state = {
     id: "",
@@ -95,6 +98,9 @@ class App extends Component {
                 Welcome {this.state.firstName} {this.state.lastName}
               </h1>
               <h4>Your role is : {this.state.role}</h4>
+              {this.state.role == "admin" ? <MManager /> : null}
+              {this.state.role == "customer" ? <Mclient /> : null}
+              {this.state.role == "worker" ? <Mworker /> : null}
               <button onClick={this.logout}>Log out</button>
             </div>
           ) : (

@@ -4,23 +4,33 @@ class MManager extends Component {
   render() {
     return (
       <div>
-        <br>
+        <div>
           <button>Show Worker Card</button>
-        </br>
-        <button>Show Costumer Card</button>
-        <br />
-        <button>Show Manager Card</button>
-        <br />
-        <button>Show Products</button>
-        <br />
-        <button>Show Shifts</button>
-
-        <button>Add new costumer</button>
-        <br />
-        <button>Show workers list</button>
-        <br />
-        <button>Show workers reviews</button>
-        <br />
+        </div>
+        <div>
+          {" "}
+          <button>Show Costumer Card</button>
+        </div>
+        <div>
+          {" "}
+          <button>Show Manager Card</button>
+        </div>
+        <div>
+          {" "}
+          <button>Show Products</button>
+        </div>
+        <div>
+          {" "}
+          <button>Show Shifts</button>
+        </div>
+        <div>
+          {" "}
+          <button>Add new costumer</button>
+        </div>
+        <div>
+          {" "}
+          <button>Show workers reviews</button>
+        </div>
       </div>
     );
   }

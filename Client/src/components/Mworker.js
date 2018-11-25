@@ -4,17 +4,29 @@ class Mworker extends Component {
   render() {
     return (
       <div>
-        <button>Show Worker Card</button>
-        <button>Show Costumer Card</button>
-        <br />
-        <button>Show Products</button>
-        <br />
-        <button>Show Shifts</button>
+        <div>
+          {" "}
+          <button>Show Worker Card</button>
+        </div>
+        <div>
+          <button>Show Costumer Card</button>
+        </div>
 
-        <button>Add new costumer</button>
-        <br />
-        <button>Print salary</button>
-        <br />
+        <div>
+          <button>Show Products</button>
+        </div>
+
+        <div>
+          <button>Show Shifts</button>
+        </div>
+
+        <div>
+          <button>Add new costumer</button>
+        </div>
+
+        <div>
+          <button>Print salary</button>
+        </div>
       </div>
     );
   }

@@ -4,17 +4,25 @@ class Mclient extends Component {
   render() {
     return (
       <div>
-        <button>Show Customer Card</button>
-        <br />
-        <button>Show Products</button>
-        <br />
-        <button>Contact us</button>
-        <br />
+        <div>
+          <button>Show Customer Card</button>
+        </div>
 
-        <button>Show worker list</button>
-        <br />
-        <button>Show our location</button>
-        <br />
+        <div>
+          <button>Show Products</button>
+        </div>
+
+        <div>
+          <button>Contact us</button>
+        </div>
+
+        <div>
+          <button>Show worker list</button>
+        </div>
+
+        <div>
+          <button>Show our location</button>
+        </div>
       </div>
     );
   }
