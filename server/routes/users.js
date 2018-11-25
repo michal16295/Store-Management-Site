@@ -30,24 +30,24 @@ router.post("/login" , async(req , res) => {
     }
     res.json(response);
 });
-router.post("/reset" , async(req , res) => {
+router.post("/reset" , async(req, res) => {
     const { error } = ValidateResetPassword(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({ id: req.body.id});
     if(!user) return res.status(400).send("Invalid ID or Password");
 
-    const validPassword = await bcrypt.compare(req.body.password , user.password);
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
     if(!validPassword) return res.status(400).send("Invalid ID or Password");
 
     const salt = await bcrypt.genSalt(10);
-    const newPassword = await bcrypt.hash(user.password , salt);
-    const user = await User.findByIdAndUpdate(user._id , {
+    const newPassword = await bcrypt.hash(user.password, salt);
+    user = await User.findByIdAndUpdate(user._id, {
         password: newPassword
-    },{
+    }, {
         new: true
     });
-    if(!user) return res.status(400).send("ERROR - Password Didn't Changed!");
+    if (!user) return res.status(400).send("ERROR - Password Didn't Changed!");
     return res.status(200).send(user);    
 
 
