@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.scss";
-
+import ChangePass from "./components/ChangePass";
 class App extends Component {
   state = {
     id: "",
@@ -83,7 +83,7 @@ class App extends Component {
               ) : null}
             </form>
             <div>
-              <button onClick={this.changePassword}>Change Password</button>
+              <ChangePass />
             </div>
           </div>
         ) : null}
