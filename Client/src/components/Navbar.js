@@ -15,8 +15,9 @@ class Navbar extends React.Component {
     }
     render() {
         const { loggedIn } = this.props;
+        const { user } = this.props;
         const { role } = this.props.user || '';
-        let showMenu = (<div>Welcome to ATMD</div>);
+        let showMenu = (<div className="bar">Welcome to ATMD</div>);
         if (role === 'admin') {
             showMenu = (<AdminMenu />);
         } else if (role === 'worker') {
@@ -29,14 +30,14 @@ class Navbar extends React.Component {
 
                 {loggedIn ? (
                 <div class="btn-group">
-                     <div class="menu">Hello XXX</div>
-                        <button onClick={this.handleLogOut.bind(this)} class="button">Log-Out</button>
-                        <button class="button">Contacts</button>
+                     <div class="menu">Hello {user.firstName}</div>
+                        <a onClick={this.handleLogOut.bind(this)} class="button">Log-Out</a>
+                        <a href='/contacts' class="button">Contacts</a>
                         <a href='/about' class="button">About</a>
                         <a href='/' class="button">Home</a>
                         {showMenu}
                     </div>
-                 ):(<div>Welcome to ATMD</div>)
+                 ):(<div className="bar">Welcome to ATMD</div>)
                 }
             </div>
         );

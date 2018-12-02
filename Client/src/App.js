@@ -10,6 +10,7 @@ import { HomePage } from './Routes/HomePage';
 import { ResetPassword } from './Routes/ResetPassword';
 import { PrivateRoute } from './Routes/PrivateRoute';
 import About from './Routes/About';
+import Contacts from './Routes/Contacts';
 
 
 class App extends React.Component {
@@ -33,6 +34,7 @@ class App extends React.Component {
                  <Route path="/login" component={LoginPage} />
                  <Route path="/reset" component={ResetPassword} />
                  <Route path="/about" component={About}/>
+                 <Route path="/contacts" component={Contacts}/>
             </div>
             </Router>
         ]
