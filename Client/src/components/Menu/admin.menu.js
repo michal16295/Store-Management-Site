@@ -8,7 +8,7 @@ export default function AdminMenu(){
         <div className="dropdown-content">
           <a>Products</a>
           <a>Workers</a>
-          <a>Costumers</a>
+          <a href='/addCustomer'>Costumers</a>
           <a>Shifts</a>
 
         </div>

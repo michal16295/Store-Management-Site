@@ -6,7 +6,12 @@ export default function WorkerMenu(){
     <div className="dropdown">
      <a class="dropbtn">Menu</a>
         <div className="dropdown-content">
-          <a>Menu 2</a>
+          <a>Private Info</a>
+          <a>Products</a>
+          <a>Workers</a>
+          <a>Costumers</a>
+          <a>Shifts</a>
+
         </div>
     </div>
     )

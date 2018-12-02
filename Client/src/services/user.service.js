@@ -6,7 +6,8 @@ export const userService = {
     login,
     logout,
     getAll,
-    resetPass
+    resetPass,
+    newUser,
 
 };
 
@@ -35,6 +36,20 @@ function logout() {
     localStorage.removeItem('user');
     
 }
+
+function newUser(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+
+
+    return 
+}
+
+
+
 function getAll() {
     const requestOptions = {
         method: 'GET',
@@ -84,4 +99,5 @@ function handleResponse(response) {
 
         return data;
     });
-}
+}   
+

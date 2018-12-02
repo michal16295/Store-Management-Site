@@ -9,7 +9,8 @@ export default function CustomerMenu(){
           <a>Products</a>
           <a>Workers</a>
           <a>Costumers</a>
-          <a>Shifts</a>
+          <a>Private Info</a>
+          <a>Our Location</a>
 
         </div>
     </div>
