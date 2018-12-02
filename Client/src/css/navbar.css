@@ -7,12 +7,9 @@
     border-radius: 3px;
     font-family: Poppins-Medium;
     color: white;
-    height: 40px;
-    font-size: 24px;
+    height: 60px;
+    font-size: 36px;
     text-align: center;
-    background-image: url(../images/WhatsApp\ Image\ 2018-12-01\ at\ 13.21.37.jpeg) no-repeat 0 0;
-    background-size: 40px 40px;
-    
 }
 
 
@@ -103,4 +100,14 @@
 .menu {
 	float:left;
     margin-top: 15px;
+}
+
+.logo {
+    background: url("../images/logo.png") no-repeat;
+    background-size: 50px;
+    float: left;
+    width: 60px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 5px;
 }

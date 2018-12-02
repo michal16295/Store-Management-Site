@@ -30,6 +30,7 @@ class Navbar extends React.Component {
 
                 {loggedIn ? (
                 <div class="btn-group">
+                    <div class="logo">&nbsp;&nbsp;&nbsp;</div>
                      <div class="menu">Hello {user.firstName}</div>
                         <a onClick={this.handleLogOut.bind(this)} class="button">Log-Out</a>
                         <a href='/contacts' class="button">Contacts</a>
@@ -37,7 +38,10 @@ class Navbar extends React.Component {
                         <a href='/' class="button">Home</a>
                         {showMenu}
                     </div>
-                 ):(<div className="bar">Welcome to ATMD</div>)
+                 ):(<div>
+                    <div class="logo">&nbsp;&nbsp;&nbsp;</div><div className="bar">Welcome to ATMD</div>
+                 </div>
+                 )
                 }
             </div>
         );
