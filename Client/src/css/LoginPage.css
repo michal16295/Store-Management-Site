@@ -181,7 +181,7 @@ iframe {
   align-items: center;
   padding: 15px;
 
-  background-image: url("../images/bg-01.jpg");
+ background-image: url('../images/bg-01.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

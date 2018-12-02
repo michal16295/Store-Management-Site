@@ -2,6 +2,6 @@ import React from 'react';
 
 export default function Contacts(){
     return(
-        <di>Contacts</di>
+        <div>Contacts</div>
     )
 }

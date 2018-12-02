@@ -3,6 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
+import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
+import '../../css/navbar.css'
+import AdminMenu from '../../components/Menu/admin.menu';
 
 import { userActions } from '../../actions';
 
@@ -41,12 +44,12 @@ class addCustomer extends React.Component {
         const { dispatch } = this.props;
         if (user.firstName && user.lastName && user.phone && user.id) {
             dispatch(userActions.newUser(user));
+            console.log(this.state);
         }
         
     }
 
     render() {
-        const { loggedIn } = this.props;
         const { user, submitted } = this.state;
         return (
             <div class="limiter">
@@ -54,7 +57,7 @@ class addCustomer extends React.Component {
                     <div class="wrap-login100">
                         <form method="post" class="login100-form validate-form"/>
                         <span class="login100-form-logo">
-                            <i class="fa fa-stroopwafel"></i>
+                            <i class="fas fa-user-plus"></i>
                         </span>
                         <span class="login100-form-title p-b-34 p-t-27">
                        Add a New Customer
@@ -73,7 +76,7 @@ class addCustomer extends React.Component {
                         {submitted && !user.firstName &&
                             <div id="empty-fields" >First Name is required</div>
                         }
-                        <span class="focus-input100" ><i id="icon" class="fa fa-key "/></span>
+                        <span class="focus-input100" ><i id="icon" class="fas fa-user"/></span>
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate="Enter Last Name">
@@ -81,7 +84,7 @@ class addCustomer extends React.Component {
                         {submitted && !user.lastName &&
                             <div id="empty-fields" >Last Name is required</div>
                         }
-                        <span class="focus-input100" ><i id="icon" class="fa fa-key "/></span>
+                        <span class="focus-input100" ><i id="icon" class="fas fa-user"/></span>
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate="Enter Phone Number">
@@ -89,26 +92,28 @@ class addCustomer extends React.Component {
                         {submitted && !user.phone &&
                             <div id="empty-fields" >Phone is required</div>
                         }
-                        <span class="focus-input100" ><i id="icon" class="fa fa-key "/></span>
+                        <span class="focus-input100" ><i id="icon" class="fas fa-phone"/></span>
                         </div>
                         <div class="container-login100-form-btn">
                             <button class="login100-form-btn" onClick={this.handleSubmit}>
                             Submit
                             </button><br/>
-                            
                         </div>
+                        {this.props.message ? <div id="invalid-input">{this.props.message.message}</div> : null}
+                         {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
+                         <Link id="resetButton" to='/'>Cancel</Link>
                     </div>
                 </div>
-
             </div>
-
         );
     }
 }
 function mapStateToProps(state) {
-    const { loggedIn } = state.authentication;
+    const { error, message } = state.alert;
+    console.log(state);
     return {
-        loggedIn,
+        message: message,
+        error: error
     };
 }
 

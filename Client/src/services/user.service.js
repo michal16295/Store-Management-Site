@@ -44,8 +44,12 @@ function newUser(user) {
         body: JSON.stringify(user)
     };
 
-
-    return 
+    return fetch(serverAddress + "/users/newCustomer", requestOptions).then(handleResponse)
+    .then(message =>{
+        return message;
+    }).catch(err =>{
+        return Promise.reject(err);
+    });
 }
 
 

@@ -14,13 +14,13 @@ const userSchema = new Schema({
     firstName: {
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 3,
         maxlength: 50
     },
     lastName: {
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 3,
         maxlength: 50
     },
     password: {
@@ -34,6 +34,12 @@ const userSchema = new Schema({
         required: true,
         enum: ['customer', 'worker', 'admin'],
         default: 'customer'
+    },
+    phone: {
+        type: String,
+        required: true,
+        min: 10,
+        max: 10
     },
     points: Number
 });

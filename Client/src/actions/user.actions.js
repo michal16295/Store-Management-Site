@@ -47,9 +47,9 @@ function newUser(user) {
 
         userService.newUser(user)
             .then(
-                user => { 
-                    dispatch(success());
-                    dispatch(alertActions.success('New User successful'));
+                message => { 
+                    dispatch(success(message));
+                    dispatch(alertActions.success(message));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -59,13 +59,9 @@ function newUser(user) {
     };
 
     function request(user) { return { type: userConstants.NEW_USER_REQUEST, user } }
-    function success(user) { return { type: userConstants.NEW_USER_SUCCESS, user } }
+    function success(message) { return { type: userConstants.NEW_USER_SUCCESS, message } }
     function failure(error) { return { type: userConstants.NEW_USER_FAILURE, error } }
 }
-
-
-
-
 
 
 function getAll() {

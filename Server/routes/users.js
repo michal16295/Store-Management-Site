@@ -63,6 +63,34 @@ router.post("/reset" , async(req, res) => {
 
 
 });
+router.post("/newCustomer" , async(req, res) => {
+    const { error } = ValidateNewUser(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+
+    let user = await User.findOne({ id: req.body.id});
+    if(user) return res.status(400).send("User already exists");
+
+
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash("123456", salt);
+
+    user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phone: req.body.phone,
+        id: req.body.id,
+        password: newPassword
+    }
+    user = await User.create(user);
+    if (!user) return res.status(400).send("ERROR - User wasn't created!");
+
+    const response = {
+        message: "User created successfully"
+    }
+    return res.status(200).send(response);    
+
+});
+
 function ValidateResetPassword(req){
     const schema = {
         id: Joi.number().required(),
@@ -78,5 +106,15 @@ function validate(req){
         password: Joi.string().min(5).max(255).required()
     };
     return Joi.validate(req , schema);
+}
+function ValidateNewUser(req){
+    const schema = {
+        id: Joi.number().required(),
+        firstName: Joi.string().min(3).max(255).required(),
+        lastName: Joi.string().min(3).max(255).required(),
+        phone: Joi.string().min(10).max(10).required(),
+    };
+    return Joi.validate(req , schema);
+        
 }
 module.exports = router;
