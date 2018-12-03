@@ -123,15 +123,14 @@ router.post("/newWorker" ,[auth, admin], async(req, res) => {
 
 });
 router.delete("/:id", [auth, admin], async(req, res)=>{
-    console.log("in delete");
-    const user = await User.find({id: id, role: "worker"});
-    console.log(user);
+    if(typeof req.params.id != "number") return res.status(404).send("ID must be a number");
+    const user = await User.findOne({id: req.params.id, role: "worker"});
     if(!user) return res.status(404).send("The user not found");
     await User.remove(user);
     const response = {
         message: "User deleted successfully"
     }
-    console.log(response);
+
     return res.status(200).send(response); 
 });
 

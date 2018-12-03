@@ -43,7 +43,6 @@ class addWorker extends React.Component {
         const { dispatch } = this.props;
         if (user.firstName && user.lastName && user.phone && user.id) {
             dispatch(userActions.newWorker(user));
-            console.log(this.state);
         }
         
     }
@@ -110,7 +109,6 @@ class addWorker extends React.Component {
 }
 function mapStateToProps(state) {
     const { error, message } = state.alert;
-    console.log(state);
     return {
         message: message,
         error: error

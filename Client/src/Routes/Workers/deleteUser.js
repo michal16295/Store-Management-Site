@@ -5,6 +5,7 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 
 
+
 import { userActions } from '../../actions';
 
 class deleteUser extends React.Component {
@@ -33,13 +34,12 @@ class deleteUser extends React.Component {
         const { dispatch } = this.props;
         if (id) {
             dispatch(userActions.deleteWorker(id));
-            alert(id);
         }
         
     }
 
     render() {
-        const { id, password, submitted } = this.state;
+        const { id, submitted } = this.state;
         return (
             <div class="limiter">
                 <div class="container-login100">
@@ -64,10 +64,10 @@ class deleteUser extends React.Component {
                             <button class="login100-form-btn" onClick={this.handleSubmit}>
                             Submit
                             </button><br/>
-                            
                         </div>
+                        {this.props.message ? <div id="invalid-input">{this.props.message}</div> : null}
+                            {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                         </form>
-                        {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                     </div>
                 </div>
 
@@ -77,11 +77,10 @@ class deleteUser extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    const { loggedIn } = state.authentication;
-    const { message } = state.alert;
+    const { message, error } = state.alert;
     return {
-        loggedIn,
-        error: message
+        message: message,
+        error: error
     };
 }
 

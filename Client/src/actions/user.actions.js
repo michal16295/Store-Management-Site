@@ -125,11 +125,16 @@ function resetPass(id, password, newPassword) {
 function deleteWorker(user){
     return dispatch=>{
         dispatch(request({ user }));
-
         userService.deleteWorker(user)
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
+                message => { 
+                    dispatch(success(message));
+                    dispatch(alertActions.success(message));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
             );
     };
 

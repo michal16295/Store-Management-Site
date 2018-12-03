@@ -61,7 +61,7 @@ function newWorker(user) {
 
 function deleteWorker(user) {
     const requestOptions = request.deleteRequest();
-    return fetch(serverAddress + "/users/" + user.id, requestOptions).then(handleResponse)
+    return fetch(serverAddress + "/users/" + user, requestOptions).then(handleResponse)
     .then(message => {
         return message;
     }).catch(err => {
