@@ -1,4 +1,5 @@
 import React from 'react';
+import { authHeader } from '../helpers';
 
 export function postRequest(arg){
     const token= JSON.parse(localStorage.getItem('user')).token;
@@ -19,6 +20,21 @@ export function getRequest(){
     const token= JSON.parse(localStorage.getItem('user')).token;
     const object ={
         method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json' ,
+             'x-auth-token': token
+             },
+    }
+    return(
+        object
+    )
+}
+
+export function deleteRequest(){
+
+    const token= JSON.parse(localStorage.getItem('user')).token;
+    const object ={
+        method: 'DELETE',
         headers: { 
             'Content-Type': 'application/json' ,
              'x-auth-token': token

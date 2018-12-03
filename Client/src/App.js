@@ -13,6 +13,7 @@ import About from './Routes/About';
 import Contacts from './Routes/Contacts';
 import { addCustomer } from './Routes/Customers/addCustomer';
 import { addWorker } from './Routes/Workers/addWorker';
+import { deleteUser } from './Routes/Workers/deleteUser';
 
 class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class App extends React.Component {
                  <PrivateRoute exact path="/" component={HomePage} />
                  <PrivateRoute path="/addCustomer" component={addCustomer}/>
                  <PrivateRoute path="/addWorker" component={addWorker}/>
+                 <PrivateRoute path="/deleteUser" component={deleteUser}/>
                  <Route path="/login" component={LoginPage} />
                  <Route path="/reset" component={ResetPassword} />
                  <Route path="/about" component={About}/>

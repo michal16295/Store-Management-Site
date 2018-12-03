@@ -9,7 +9,8 @@ export const userActions = {
     getAll,
     resetPass,
     newCustomer,
-    newWorker
+    newWorker,
+    deleteWorker
 
 };
 
@@ -120,6 +121,21 @@ function resetPass(id, password, newPassword) {
     function request(user) { return { type: userConstants.RESET_PASSWORD_REQUEST, user } }
     function success(user) { return { type: userConstants.RESET_PASSWORD_SUCCESS, user } }
     function failure(error) { return { type: userConstants.RESET_PASSWORD_FAILURE, error } }
+}
+function deleteWorker(user){
+    return dispatch=>{
+        dispatch(request({ user }));
+
+        userService.deleteWorker(user)
+            .then(
+                users => dispatch(success(users)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request(user) { return { type: userConstants.DELETE_WORKER_REQUEST, user } }
+    function success(message) { return { type: userConstants.DELETE_WORKER_SUCCESS, message } }
+    function failure(error) { return { type: userConstants.DELETE_WORKER_FAILURE, error } }
 }
 
 

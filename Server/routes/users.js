@@ -122,6 +122,18 @@ router.post("/newWorker" ,[auth, admin], async(req, res) => {
     return res.status(200).send(response);    
 
 });
+router.delete("/:id", [auth, admin], async(req, res)=>{
+    console.log("in delete");
+    const user = await User.find({id: id, role: "worker"});
+    console.log(user);
+    if(!user) return res.status(404).send("The user not found");
+    await User.remove(user);
+    const response = {
+        message: "User deleted successfully"
+    }
+    console.log(response);
+    return res.status(200).send(response); 
+});
 
 function ValidateResetPassword(req){
     const schema = {
