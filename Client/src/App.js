@@ -12,8 +12,7 @@ import { PrivateRoute } from './Routes/PrivateRoute';
 import About from './Routes/About';
 import Contacts from './Routes/Contacts';
 import { addCustomer } from './Routes/Customers/addCustomer';
-import Adminmenu from './components/Menu/admin.menu'
-
+import { addWorker } from './Routes/Workers/addWorker';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,9 +30,10 @@ class App extends React.Component {
     return (
         [<Navbar />,
              <Router history={history}>
-             <div>
+             <div style={{paddingTop: 59 + 'px', zIndex: 1}}>
                  <PrivateRoute exact path="/" component={HomePage} />
                  <PrivateRoute path="/addCustomer" component={addCustomer}/>
+                 <PrivateRoute path="/addWorker" component={addWorker}/>
                  <Route path="/login" component={LoginPage} />
                  <Route path="/reset" component={ResetPassword} />
                  <Route path="/about" component={About}/>

@@ -8,7 +8,8 @@ export const userActions = {
     logout,
     getAll,
     resetPass,
-    newUser
+    newCustomer,
+    newWorker
 
 };
 
@@ -41,11 +42,11 @@ function logout() {
     history.push('/login');
     return { type: userConstants.LOGOUT };
 }
-function newUser(user) {
+function newCustomer(user) {
     return dispatch => {
         dispatch(request(user));
 
-        userService.newUser(user)
+        userService.newCustomer(user)
             .then(
                 message => { 
                     dispatch(success(message));
@@ -62,7 +63,27 @@ function newUser(user) {
     function success(message) { return { type: userConstants.NEW_USER_SUCCESS, message } }
     function failure(error) { return { type: userConstants.NEW_USER_FAILURE, error } }
 }
+function newWorker(user) {
+    return dispatch => {
+        dispatch(request(user));
 
+        userService.newWorker(user)
+            .then(
+                message => { 
+                    dispatch(success(message));
+                    dispatch(alertActions.success(message));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.NEW_USER_REQUEST, user } }
+    function success(message) { return { type: userConstants.NEW_USER_SUCCESS, message } }
+    function failure(error) { return { type: userConstants.NEW_USER_FAILURE, error } }
+}
 
 function getAll() {
     return dispatch => {

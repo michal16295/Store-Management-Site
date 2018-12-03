@@ -8,7 +8,6 @@ export default function CustomerMenu(){
         <div className="dropdown-content">
           <a>Products</a>
           <a>Workers</a>
-          <a>Costumers</a>
           <a>Private Info</a>
           <a>Our Location</a>
 

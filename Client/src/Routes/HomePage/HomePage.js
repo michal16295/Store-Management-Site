@@ -20,7 +20,7 @@ class HomePage extends React.Component {
         }
         return (
             <div>
-                
+                Home Page
                
             </div>
         );

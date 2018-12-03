@@ -5,11 +5,10 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css'
-import AdminMenu from '../../components/Menu/admin.menu';
 
 import { userActions } from '../../actions';
 
-class addCustomer extends React.Component {
+class addWorker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +42,8 @@ class addCustomer extends React.Component {
         const { user } = this.state;
         const { dispatch } = this.props;
         if (user.firstName && user.lastName && user.phone && user.id) {
-            dispatch(userActions.newCustomer(user));
+            dispatch(userActions.newWorker(user));
+            console.log(this.state);
         }
         
     }
@@ -59,7 +59,7 @@ class addCustomer extends React.Component {
                             <i class="fas fa-user-plus"></i>
                         </span>
                         <span class="login100-form-title p-b-34 p-t-27">
-                       Add a New Customer
+                       Add a New Worker
                         </span>
 
                         <div class="wrap-input100 validate-input" data-validate="Enter User ID">
@@ -117,5 +117,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedaddCustomer = connect(mapStateToProps)(addCustomer);
-export { connectedaddCustomer as addCustomer }; 
+const connectedaddWorker = connect(mapStateToProps)(addWorker);
+export { connectedaddWorker as addWorker }; 

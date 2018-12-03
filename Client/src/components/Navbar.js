@@ -26,8 +26,7 @@ class Navbar extends React.Component {
             showMenu = (<CustomerMenu />);
         }
         return (
-            <div> 
-
+            <div className="sticky-top"> 
                 {loggedIn ? (
                 <div class="btn-group">
                     <div class="logo">&nbsp;&nbsp;&nbsp;</div>

@@ -1,4 +1,5 @@
 import { authHeader } from '../helpers';
+import * as request from './req.options'
 
 const serverAddress = "http://localhost:5000";
 
@@ -7,7 +8,8 @@ export const userService = {
     logout,
     getAll,
     resetPass,
-    newUser,
+    newCustomer,
+    newWorker
 
 };
 
@@ -37,14 +39,18 @@ function logout() {
     
 }
 
-function newUser(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
+function newCustomer(user) {
+    const requestOptions = request.postRequest(user);
     return fetch(serverAddress + "/users/newCustomer", requestOptions).then(handleResponse)
+    .then(message =>{
+        return message;
+    }).catch(err =>{
+        return Promise.reject(err);
+    });
+}
+function newWorker(user) {
+    const requestOptions = request.postRequest(user);
+    return fetch(serverAddress + "/users/newWorker", requestOptions).then(handleResponse)
     .then(message =>{
         return message;
     }).catch(err =>{

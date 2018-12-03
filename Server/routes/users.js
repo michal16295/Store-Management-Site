@@ -1,8 +1,12 @@
 const { User } = require('../models/users');
+const worker = require('../middlewares/worker');
+const admin = require('../middlewares/admin');
+const adminOrWorker = require('../middlewares/adminOrWorker');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
+const auth = require('../middlewares/auth');
 
 router.post("/login" , async(req , res) => {
     const { error } = validate(req.body);
@@ -63,7 +67,7 @@ router.post("/reset" , async(req, res) => {
 
 
 });
-router.post("/newCustomer" , async(req, res) => {
+router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
     const { error } = ValidateNewUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -80,6 +84,34 @@ router.post("/newCustomer" , async(req, res) => {
         phone: req.body.phone,
         id: req.body.id,
         password: newPassword
+    }
+    user = await User.create(user);
+    if (!user) return res.status(400).send("ERROR - User wasn't created!");
+
+    const response = {
+        message: "User created successfully"
+    }
+    return res.status(200).send(response);    
+
+});
+router.post("/newWorker" ,[auth, admin], async(req, res) => {
+    const { error } = ValidateNewUser(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+
+    let user = await User.findOne({ id: req.body.id});
+    if(user) return res.status(400).send("User already exists");
+
+
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash("123456", salt);
+
+    user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phone: req.body.phone,
+        id: req.body.id,
+        password: newPassword,
+        role: 'worker'
     }
     user = await User.create(user);
     if (!user) return res.status(400).send("ERROR - User wasn't created!");

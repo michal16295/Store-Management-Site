@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
             { checkLogin }
                 <div class="container-login100">
                     <div class="wrap-login100">
-                        <form method="post" class="login100-form validate-form"/>
+                        <form method="post" class="login100-form validate-form">
                         <span class="login100-form-logo">
                             <i class="fa fa-address-card"></i>
                         </span>
@@ -79,6 +79,7 @@ class LoginPage extends React.Component {
                             </button><br/>
                             
                         </div>
+                        </form>
                         {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                         <Link id= "resetButton" to="/reset" >Reset Password</Link>
                     </div>
