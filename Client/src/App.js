@@ -12,6 +12,7 @@ import { PrivateRoute } from './Routes/PrivateRoute';
 import About from './Routes/About';
 import Contacts from './Routes/Contacts';
 import { addCustomer } from './Routes/Customers/addCustomer';
+import { workersList } from './Routes/Workers/workersList';
 import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
 
@@ -34,6 +35,7 @@ class App extends React.Component {
              <div style={{paddingTop: 59 + 'px', zIndex: 1}}>
                  <PrivateRoute exact path="/" component={HomePage} />
                  <PrivateRoute path="/addCustomer" component={addCustomer}/>
+                 <PrivateRoute path="/workers" component={workersList}/>
                  <PrivateRoute path="/addWorker" component={addWorker}/>
                  <PrivateRoute path="/deleteWorker" component={deleteWorker}/>
                  <Route path="/login" component={LoginPage} />

@@ -11,9 +11,7 @@ export function postRequest(arg){
              },
         body: JSON.stringify(arg)
     }
-    return(
-        object
-    )
+    return object;
 }
 
 export function getRequest(){
@@ -25,22 +23,30 @@ export function getRequest(){
              'x-auth-token': token
              },
     }
-    return(
-        object
-    )
+    return object;
+}
+
+export function putRequest(arg){
+    const token= JSON.parse(localStorage.getItem('user')).token;
+    const object ={
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json' ,
+             'x-auth-token': token
+             },
+             body: JSON.stringify(arg)
+    }
+    return object;
 }
 
 export function deleteRequest(){
-
     const token= JSON.parse(localStorage.getItem('user')).token;
     const object ={
         method: 'DELETE',
         headers: { 
             'Content-Type': 'application/json' ,
              'x-auth-token': token
-             },
+             }
     }
-    return(
-        object
-    )
+    return object;
 }

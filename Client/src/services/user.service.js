@@ -10,7 +10,8 @@ export const userService = {
     resetPass,
     newCustomer,
     newWorker,
-    deleteWorker
+    deleteWorker,
+    getWorkers
 
 };
 
@@ -69,8 +70,6 @@ function deleteWorker(userId) {
     });
 }
 
-
-
 function getAll() {
     const requestOptions = {
         method: 'GET',
@@ -78,6 +77,18 @@ function getAll() {
     };
 
     return fetch(serverAddress + "/users", requestOptions).then(handleResponse);
+}
+
+function getWorkers() {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/users', requestOptions)
+        .then(handleResponse)
+        .then(workers => {
+            return workers;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
 }
 
 function resetPass(id, password , newPassword) {
@@ -96,8 +107,6 @@ function resetPass(id, password , newPassword) {
             return user;
         });
 }
-
-
 
 function handleResponse(response) {
     return response.text().then(text => {

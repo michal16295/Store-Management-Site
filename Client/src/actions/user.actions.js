@@ -10,7 +10,8 @@ export const userActions = {
     resetPass,
     newCustomer,
     newWorker,
-    deleteWorker
+    deleteWorker,
+    getWorkers
 
 };
 
@@ -100,6 +101,28 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function getWorkers(){
+    return dispatch => {
+        dispatch(request());
+
+        userService.getWorkers()
+            .then(
+                workers => { 
+                    dispatch(success(workers));
+                    dispatch(alertActions.success(workers));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.GETWORKERS_REQUEST } }
+    function success(workers) { return { type: userConstants.GETWORKERS_SUCCESS, workers } }
+    function failure(error) { return { type: userConstants.GETWORKERS_FAILURE, error } }
 }
 
 function resetPass(id, password, newPassword) {

@@ -28,17 +28,17 @@ class Navbar extends React.Component {
         return (
             <div className="sticky-top"> 
                 {loggedIn ? (
-                <div class="btn-group">
-                    <div class="logo">&nbsp;&nbsp;&nbsp;</div>
-                     <div class="menu">Hello {user.firstName}</div>
-                        <a onClick={this.handleLogOut.bind(this)} class="button">Log-Out</a>
-                        <a href='/contacts' class="button">Contacts</a>
-                        <a href='/about' class="button">About</a>
-                        <a href='/' class="button">Home</a>
+                <div className="btn-group">
+                    <div className="logo">&nbsp;&nbsp;&nbsp;</div>
+                     <div className="menu">Hello {user.firstName}</div>
+                        <a onClick={this.handleLogOut.bind(this)} className="button">Log-Out</a>
+                        <a href='/contacts' className="button">Contacts</a>
+                        <a href='/about' className="button">About</a>
+                        <a href='/' className="button">Home</a>
                         {showMenu}
                     </div>
                  ):(<div>
-                    <div class="logo">&nbsp;&nbsp;&nbsp;</div><div className="bar">Welcome to ATMD</div>
+                    <div className="logo">&nbsp;&nbsp;&nbsp;</div><div className="bar">Welcome to ATMD</div>
                  </div>
                  )
                 }

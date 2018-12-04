@@ -6,7 +6,7 @@ const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
-
+ 
 router.post("/login" , async(req , res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -134,6 +134,14 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
     return res.status(200).send(response); 
 });
 
+router.get("/", [auth, admin], async(req, res)=>{
+    const users = await User.find({role: "worker"}).select('-_id -__v -password -role');
+
+    if(!users) return res.status(404).send("Error finding workers");
+
+    return res.status(200).send(users);
+});
+
 function ValidateResetPassword(req){
     const schema = {
         id: Joi.number().required(),
@@ -156,9 +164,9 @@ function ValidateNewUser(req){
         id: Joi.number().required(),
         firstName: Joi.string().min(3).max(255).required(),
         lastName: Joi.string().min(3).max(255).required(),
-        phone: Joi.string().min(10).max(10).required()
+        phone: Joi.string().min(10).max(10).regex(/^\d+$/).required()
     };
-    return Joi.validate(req , schema);       
+    return Joi.validate(req , schema);
 }
 
 module.exports = router;

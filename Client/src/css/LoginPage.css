@@ -597,5 +597,19 @@ font-family: Poppins-Medium;
   animation: pop 0.3s linear 1; 
 }
 
+/*==================================================================
+[ Table ]*/
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: #fff;
+}
 
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(7, 7, 7, 0.308);
+}
+
+tr:hover {background-color:#36363673;}

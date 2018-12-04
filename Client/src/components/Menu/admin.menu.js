@@ -4,9 +4,10 @@ import '../../css/navbar.css'
 export default function AdminMenu(){
     return(
     <div className="dropdown">
-     <a class="dropbtn">Menu</a>
+     <a className="dropbtn">Menu</a>
         <div className="dropdown-content">
           <a>Products</a>
+          <a href='/workers'>Workers</a>
           <a href='/addWorker'>Add Worker</a>
           <a href='/deleteWorker'>Delete Worker</a>
           <a href='/addCustomer'>Add Customers</a>
