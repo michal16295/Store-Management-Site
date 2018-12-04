@@ -38,11 +38,11 @@ function login(id, password) {
 }
 
 function logout() {
-
     userService.logout();
     history.push('/login');
     return { type: userConstants.LOGOUT };
 }
+
 function newCustomer(user) {
     return dispatch => {
         dispatch(request(user));
@@ -101,6 +101,7 @@ function getAll() {
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
+
 function resetPass(id, password, newPassword) {
     return dispatch => {
         dispatch(request({ id }));
@@ -122,10 +123,11 @@ function resetPass(id, password, newPassword) {
     function success(user) { return { type: userConstants.RESET_PASSWORD_SUCCESS, user } }
     function failure(error) { return { type: userConstants.RESET_PASSWORD_FAILURE, error } }
 }
-function deleteWorker(user){
+
+function deleteWorker(userId){
     return dispatch=>{
-        dispatch(request({ user }));
-        userService.deleteWorker(user)
+        dispatch(request({ userId }));
+        userService.deleteWorker(userId)
             .then(
                 message => { 
                     dispatch(success(message));

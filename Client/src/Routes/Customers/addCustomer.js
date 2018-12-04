@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css'
-import AdminMenu from '../../components/Menu/admin.menu';
 
 import { userActions } from '../../actions';
 
@@ -45,7 +44,6 @@ class addCustomer extends React.Component {
         if (user.firstName && user.lastName && user.phone && user.id) {
             dispatch(userActions.newCustomer(user));
         }
-        
     }
 
     render() {
@@ -99,7 +97,7 @@ class addCustomer extends React.Component {
                             </button><br/>
                         </div>
                         </form>
-                        {this.props.message ? <div id="invalid-input">{this.props.message.message}</div> : null}
+                         {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
                          {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                          <Link id="resetButton" to='/'>Cancel</Link>
                     </div>
@@ -108,6 +106,7 @@ class addCustomer extends React.Component {
         );
     }
 }
+
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     console.log(state);

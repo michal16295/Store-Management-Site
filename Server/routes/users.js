@@ -1,5 +1,4 @@
 const { User } = require('../models/users');
-const worker = require('../middlewares/worker');
 const admin = require('../middlewares/admin');
 const adminOrWorker = require('../middlewares/adminOrWorker');
 const bcrypt = require('bcrypt');
@@ -64,9 +63,8 @@ router.post("/reset" , async(req, res) => {
     };
 
     return res.status(200).send(response);    
-
-
 });
+
 router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
     const { error } = ValidateNewUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -92,8 +90,8 @@ router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
         message: "User created successfully"
     }
     return res.status(200).send(response);    
-
 });
+
 router.post("/newWorker" ,[auth, admin], async(req, res) => {
     const { error } = ValidateNewUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -119,14 +117,16 @@ router.post("/newWorker" ,[auth, admin], async(req, res) => {
     const response = {
         message: "User created successfully"
     }
-    return res.status(200).send(response);    
-
+    return res.status(200).send(response);
 });
+
 router.delete("/:id", [auth, admin], async(req, res)=>{
-    if(typeof req.params.id != "number") return res.status(404).send("ID must be a number");
-    const user = await User.findOne({id: req.params.id, role: "worker"});
+    let userId = parseInt(req.params.id);
+    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
+    
+    const user = await User.findOne({id: userId, role: "worker"});
     if(!user) return res.status(404).send("The user not found");
-    await User.remove(user);
+    await User.deleteOne(user);
     const response = {
         message: "User deleted successfully"
     }
@@ -141,8 +141,8 @@ function ValidateResetPassword(req){
         newPassword: Joi.string().min(5).max(255).required()
     };
     return Joi.validate(req , schema);
-        
 }
+
 function validate(req){
     const schema = {
         id: Joi.number().required(),
@@ -150,14 +150,15 @@ function validate(req){
     };
     return Joi.validate(req , schema);
 }
+
 function ValidateNewUser(req){
     const schema = {
         id: Joi.number().required(),
         firstName: Joi.string().min(3).max(255).required(),
         lastName: Joi.string().min(3).max(255).required(),
-        phone: Joi.string().min(10).max(10).required(),
+        phone: Joi.string().min(10).max(10).required()
     };
-    return Joi.validate(req , schema);
-        
+    return Joi.validate(req , schema);       
 }
+
 module.exports = router;

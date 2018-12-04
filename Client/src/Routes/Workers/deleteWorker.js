@@ -1,20 +1,16 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 
-
-
 import { userActions } from '../../actions';
 
-class deleteUser extends React.Component {
+class deleteWorker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             id: '',
             submitted: false,
-            
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -65,7 +61,7 @@ class deleteUser extends React.Component {
                             Submit
                             </button><br/>
                         </div>
-                        {this.props.message ? <div id="invalid-input">{this.props.message}</div> : null}
+                            {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
                             {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                         </form>
                     </div>
@@ -78,11 +74,13 @@ class deleteUser extends React.Component {
 }
 function mapStateToProps(state) {
     const { message, error } = state.alert;
+    console.log(message);
+    console.log(error);
     return {
         message: message,
         error: error
     };
 }
 
-const connecteddeleteUser = connect(mapStateToProps)(deleteUser);
-export { connecteddeleteUser as deleteUser }; 
+const connectedDeleteWorker = connect(mapStateToProps)(deleteWorker);
+export { connectedDeleteWorker as deleteWorker }; 

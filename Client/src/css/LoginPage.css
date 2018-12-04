@@ -565,10 +565,11 @@ iframe {
   }
 }
 
-#empty-fields{
+#empty-fields {
     color : rgb(167, 29, 29);
 }
-#invalid-input{
+
+#invalid-input {
 text-transform: uppercase;
 font-family: Poppins-Medium;
  margin: 10px 0px;
@@ -584,7 +585,17 @@ font-family: Poppins-Medium;
   50% { transform: scale(1.1);}
 }
 
-
+#success-msg {
+  text-transform: uppercase;
+  font-family: Poppins-Medium;
+  margin: 10px 0px;
+  padding: 12px;
+  color:rgb(35, 187, 35);
+  background-color: white;
+  text-align: center;
+  border-radius: 8px;
+  animation: pop 0.3s linear 1; 
+}
 
 
 

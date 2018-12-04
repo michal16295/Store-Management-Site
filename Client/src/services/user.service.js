@@ -59,9 +59,9 @@ function newWorker(user) {
     });
 }
 
-function deleteWorker(user) {
+function deleteWorker(userId) {
     const requestOptions = request.deleteRequest();
-    return fetch(serverAddress + "/users/" + user, requestOptions).then(handleResponse)
+    return fetch(serverAddress + "/users/" + userId, requestOptions).then(handleResponse)
     .then(message => {
         return message;
     }).catch(err => {

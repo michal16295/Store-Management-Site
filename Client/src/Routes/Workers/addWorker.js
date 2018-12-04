@@ -98,7 +98,7 @@ class addWorker extends React.Component {
                             </button><br/>
                         </div>
                         </form>
-                        {this.props.message ? <div id="invalid-input">{this.props.message.message}</div> : null}
+                        {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
                          {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                          <Link id="resetButton" to='/'>Cancel</Link>
                     </div>
