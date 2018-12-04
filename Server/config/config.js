@@ -11,8 +11,8 @@ const secretKey = () => {
 // Set routes
 const setRoutes = (app) => {
     app.use(express.json());
-    app.use('/api/users', users);
-    app.use('/api/products', products);
+    app.use('/users', users);
+    app.use('/products', products);
 }
 
 // Connect to Database

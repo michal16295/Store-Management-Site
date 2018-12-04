@@ -1,0 +1,119 @@
+.bar{
+    background: #40e0d0;
+    background-image: -webkit-linear-gradient(top,  #40e0d0, #50beb3);
+    background: -o-linear-gradient(top,  #40e0d0, #50beb3);
+    background: -moz-linear-gradient(top,  #40e0d0, #50beb3);
+    background: linear-gradient(top,   #40e0d0, #50beb3);
+    border-radius: 3px;
+    font-family: Poppins-Medium;
+    color: white;
+    height: 60px;
+    font-size: 36px;
+    text-align: center;
+}
+.sticky-top{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+
+.btn-group {
+    background: #40e0d0;
+    background-image: -webkit-linear-gradient(top,  #40e0d0, #50beb3);
+    background: -o-linear-gradient(top,  #40e0d0, #50beb3);
+    background: -moz-linear-gradient(top,  #40e0d0, #50beb3);
+    background: linear-gradient(top,   #40e0d0, #50beb3);
+    font-family: Poppins-Medium;
+    color: white;
+    height: 40px;
+    font-size: 24px;
+    border-radius: 3px;
+
+    height: 59px;
+}
+
+.btn-group .button {
+    background-color: #817e81; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+   	float: right;
+    border: 1px solid rgb(85, 84, 84);
+}
+
+.btn-group .button:hover {
+    background-color: #50beb3;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+.dropbtn {
+    background-color: #817e81;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border: 1px solid rgb(85, 84, 84);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 3px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+   
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #50beb3;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+.menu {
+	float:left;
+    margin-top: 15px;
+}
+
+.logo {
+    background: url("../images/logo.png") no-repeat;
+    background-size: 50px;
+    float: left;
+    width: 60px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
