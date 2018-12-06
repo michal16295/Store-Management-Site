@@ -92,10 +92,10 @@ class LoginPage extends React.Component {
 }
 function mapStateToProps(state) {
     const { loggedIn } = state.authentication;
-    const { message } = state.alert;
+    const { error } = state.alert;
     return {
         loggedIn,
-        error: message
+        error: error
     };
 }
 
