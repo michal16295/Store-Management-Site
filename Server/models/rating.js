@@ -2,31 +2,31 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Purchase_Log_Schema = new Schema({
+const Ratings_Schema = new Schema({
     id: {
         type: Number,
         min: 1,
         required: true
     },
-    product_id: {
+    worker_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: 'User',
         required: true
     },
-    quantity: {
+    costumer_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    rating: {
         type: Number,
-        min: 0,
+        min: 1,
+        max: 5,
         required: true
     },
     date: {
         type: Date,
         required: true
-    },
-    direction: {
-        type: Boolean,
-        required: true
     }
-
 });
-
-exports.Purchase_Log = mongoose.model('Purchase_Log ' , Purchase_Log_Schema);
+exports.Ratings_Schema= mongoose.model('Rating_Schema' , Ratings_Schema);

@@ -2,18 +2,23 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Purchase_Log_Schema = new Schema({
+const Salary_Logs_Schema = new Schema({
     id: {
         type: Number,
         min: 1,
         required: true
     },
-    product_id: {
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: 'Users',
         required: true
     },
-    quantity: {
+    basis: {
+        type: Number,
+        min: 0,
+        required: true
+    },
+    bonus: {
         type: Number,
         min: 0,
         required: true
@@ -21,12 +26,6 @@ const Purchase_Log_Schema = new Schema({
     date: {
         type: Date,
         required: true
-    },
-    direction: {
-        type: Boolean,
-        required: true
     }
-
 });
-
-exports.Purchase_Log = mongoose.model('Purchase_Log ' , Purchase_Log_Schema);
+exports.Salary_Logs_Schema = mongoose.model('Salary_Logs' , Salary_Logs_Schema);
