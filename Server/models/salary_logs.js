@@ -10,7 +10,7 @@ const Salary_Logs_Schema = new Schema({
     },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
+        ref: 'User',
         required: true
     },
     basis: {

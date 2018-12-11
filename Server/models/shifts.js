@@ -14,8 +14,8 @@ const Shifts_Schema = new Schema({
         required: true
     },
     shift: {
-        // True - Morning , False - Night
-        type: Boolean,
+        type: String,
+        enum: ['morning', 'evening'],
         required: true
     },
 
