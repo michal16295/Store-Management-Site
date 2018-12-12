@@ -26,8 +26,8 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
-        min: 5,
-        max: 1024
+        minlength: 5,
+        maxlength: 1024
     },
     role: {
         type: String,
@@ -38,8 +38,8 @@ const userSchema = new Schema({
     phone: {
         type: String,
         required: true,
-        min: 10,
-        max: 10
+        minlength: 10,
+        maxlength: 10
     },
     points: Number
 });
