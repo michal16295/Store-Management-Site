@@ -50,10 +50,10 @@ router.get("/", [auth, adminOrWorker], async (req, res) => {
 });
 
 router.delete("/delete/:id", [auth, admin], async (req, res) => {
-    let shiftId = parseInt(req.params.id);
-    if (isNaN(shiftId) || shiftId <= 0) return res.status(404).send("C/N must be a positive number");
+    let shiftId = req.params.id;
+    if (!shiftId) return res.status(404).send("ID must be provided");
     
-    const shift = await Shift.findOne({ _id: req.params.id });
+    const shift = await Shift.findOne({ _id: shiftId });
     if (!shift) return res.status(404).send("The shift was not found");
 
     await Shift.deleteOne(shift);
