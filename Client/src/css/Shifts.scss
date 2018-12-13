@@ -1,5 +1,4 @@
 .Shifts {
-  margin-top: 15rem;
   table {
     background-image: linear-gradient(#40e0d0, #545354);
     border: 1px solid white;
@@ -8,6 +7,11 @@
     td {
       //background-image: linear-gradient(top, #40e0d0, #545354);
       border: 2px solid white;
+    }
+    th {
+      border: 2px solid white;
+      font: bolder;
+      font-size: 1.5rem;
     }
     tr {
       border-color: red;

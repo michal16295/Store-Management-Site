@@ -16,7 +16,7 @@ import { workersList } from './Routes/Workers/workersList';
 import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
 import Shift from './Routes/Shifts/Shift';
-import AboutMe from './Routes/AboutMe/AboutMe';
+import { AboutMe } from './Routes/AboutMe/AboutMe';
 class App extends React.Component {
   constructor(props) {
     super(props);

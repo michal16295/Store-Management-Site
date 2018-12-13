@@ -5,7 +5,6 @@ import '../../css/Shifts.scss';
 class Shift extends Component {
   state = {
     shift: {
-      id: '',
       shift: '',
       date: ''
     },
@@ -18,10 +17,17 @@ class Shift extends Component {
       'Friday',
       'Saturday'
     ],
-    shifts: ['Morning', 'Evening']
+    shifts: ['morning', 'evening'],
+    selected: [
+      { shift: 'morning', date: 'Sunday' },
+      { shift: 'evening', date: 'Friday' }
+    ]
   };
 
   render() {
+    const headers = this.state.days.map((day, index) => {
+      return <th key={index}>{day}</th>;
+    });
     const table = this.state.shifts.map((shift, index) => {
       return (
         <tr key={index}>
@@ -29,14 +35,18 @@ class Shift extends Component {
             return (
               <td
                 key={index2}
-                onClick={event =>
+                onClick={() =>
                   this.setState({ shift: { id: '', shift: shift, date: day } })
                 }
               >
-                <div>{day}</div>
-                <div>{shift}</div>
                 <div>
-                  <button>Sign in</button>
+                  {this.state.selected.some(
+                    obj => obj.shift === shift && obj.date == day
+                  ) ? (
+                    <h3>Taken </h3>
+                  ) : (
+                    <button>{shift}</button>
+                  )}
                 </div>
               </td>
             );
@@ -47,9 +57,14 @@ class Shift extends Component {
 
     return (
       <div className="Shifts">
-        <table>
-          <tbody>{table}</tbody>
-        </table>
+        <div className="container-login100">
+          <table>
+            <tbody>
+              {headers}
+              {table}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
