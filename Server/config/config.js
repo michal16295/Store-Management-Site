@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const users = require('../routes/users');
 const products = require('../routes/products');
+const shifts = require('../routes/shifts');
 
 // Secret Key
 const secretKey = () => {
@@ -13,6 +14,7 @@ const setRoutes = (app) => {
     app.use(express.json());
     app.use('/users', users);
     app.use('/products', products);
+    app.use('/shifts', shifts);
 }
 
 // Connect to Database
