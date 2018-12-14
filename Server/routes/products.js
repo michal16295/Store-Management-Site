@@ -78,7 +78,7 @@ router.put('/sell/:id', [auth], async(req, res)=>{
     purchaseLog = {
         price: product.sellingPrice,
         product_id: product._id,
-        quantity: product.quantity,
+        quantity: 1,
         date: new Date(),
         direction: 'sell'
     }
