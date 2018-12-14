@@ -134,7 +134,7 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
     return res.status(200).send(response); 
 });
 
-router.put("update/:id", async(req, res)=>{
+router.put("update/:id",[auth], async(req, res)=>{
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
     
@@ -148,7 +148,7 @@ router.put("update/:id", async(req, res)=>{
         }
     });
     const response = {
-        message: "User deleted successfully"
+        message: "User updated successfully"
     }
 
     return res.status(200).send(response); 

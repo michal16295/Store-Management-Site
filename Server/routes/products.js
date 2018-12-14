@@ -1,12 +1,14 @@
 const { Product } = require('../models/product');
+const { PurchasLogs } = require('../models/purchase_logs');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const admin = require('../middlewares/admin');
 const adminOrWorker = require('../middlewares/adminOrWorker');
+const Joi = require('joi');
 
 //adding a new product to the stock
-router.post("/newProduct" ,[auth, admin], async(req, res) => {
+router.post("/newProduct" ,[auth, adminOrWorker], async(req, res) => {
     const { error } = ValidateNewProduct(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -16,8 +18,9 @@ router.post("/newProduct" ,[auth, admin], async(req, res) => {
     product = {
         name: req.body.name,
         id: req.body.id,
-        price: req.body.price,
-        quantity: req.body.quantity
+        buyingPrice: req.body.buyingPrice,
+        sellingPrice: req.body.sellingPrice,
+        quantity: 0
     }
     product = await Product.create(product);
     if (!product) return res.status(400).send("ERROR - Product wasn't created!");
@@ -41,31 +44,63 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
 
     return res.status(200).send(response); 
 });
-// update quantity
-router.put('/update/:id', [auth, admin], async(req, res)=>{
+// ordering items to the stock
+router.put('/buy/:id', [auth, admin], async(req, res)=>{
     let productID = parseInt(req.params.id);
     if (isNaN(productID) || productID <= 0) return res.status(404).send("ID must be a positive number");
     const product = await Product.findOne({id: productID});
     if(!product) return res.status(404).send("The product was not found");
-    await Product.update({_id: productID}, {
-        $set:{
+    purchaseLog = {
+        price: product.buyingPrice,
+        product_id: product._id,
+        quantity: req.body.quantity,
+        date: new Date(),
+        direction: 'buy'
+    }
+    await PurchasLogs.create(purchaseLog);
+    await Product.update({id: productID},{
+        $inc:{
             quantity: req.body.quantity
         }
     });
     const response = {
-        message: "Product updated successfully"
+        message: "Product ordered successfully"
     }
 
     return res.status(200).send(response); 
+});
+// selling items
+router.put('/sell/:id', [auth], async(req, res)=>{
+    let productID = parseInt(req.params.id);
+    if (isNaN(productID) || productID <= 0) return res.status(404).send("ID must be a positive number");
+    const product = await Product.findOne({id: productID});
+    if(!product) return res.status(404).send("The product was not found");
+    purchaseLog = {
+        price: product.sellingPrice,
+        product_id: product._id,
+        quantity: product.quantity,
+        date: new Date(),
+        direction: 'sell'
+    }
+    await PurchasLogs.create(purchaseLog);
+    await Product.update({id: productID},{
+        $inc:{
+            quantity: -1
+        }
+    });
+    const response = {
+        message: "Product selled successfully"
+    }
 
+    return res.status(200).send(response); 
 });
  
 function ValidateNewProduct(req){
     const schema = {
         id: Joi.number().required(),
         name: Joi.string().min(2).max(255).required(),
-        price: Joi.number().required(),
-        quantity: Joi.number().required()
+        buyingPrice: Joi.number().required(),
+        sellingPrice: Joi.number().required(),
     };
     return Joi.validate(req , schema);
 }

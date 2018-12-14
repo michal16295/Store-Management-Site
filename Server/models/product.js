@@ -13,7 +13,12 @@ const Product_Schema = new Schema({
         minlength: 2, 
         required: true
     },
-    price: {
+    buyingPrice: {
+        type: Number,
+        min: 0,
+        required: true
+    },
+    sellingPrice:{
         type: Number,
         min: 0,
         required: true

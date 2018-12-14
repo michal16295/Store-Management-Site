@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Purchase_Log_Schema = new Schema({
-    id: {
+const PurchasLogsSchema = new Schema({
+    price: {
         type: Number,
-        min: 1,
+        min: 0,
         required: true
     },
     product_id: {
@@ -23,10 +23,11 @@ const Purchase_Log_Schema = new Schema({
         required: true
     },
     direction: {
-        type: Boolean,
+        type: String,
+        enum: ['buy', 'sell'],
         required: true
     }
 
 });
 
-exports.Purchase_Log = mongoose.model('Purchase_Log ' , Purchase_Log_Schema);
+exports.PurchasLogs = mongoose.model('PurchasLogs' , PurchasLogsSchema);
