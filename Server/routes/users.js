@@ -134,6 +134,26 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
     return res.status(200).send(response); 
 });
 
+router.put("update/:id", async(req, res)=>{
+    let userId = parseInt(req.params.id);
+    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
+    
+    const user = await User.findOne({id: userId});
+    if(!user) return res.status(404).send("The user not found");
+    await User.update({_id: userID}, {
+        $set:{
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phone: req.body.phone,
+        }
+    });
+    const response = {
+        message: "User deleted successfully"
+    }
+
+    return res.status(200).send(response); 
+});
+
 router.get("/", [auth, admin], async(req, res)=>{
     const users = await User.find({role: "worker"}).select('-_id -__v -password -role');
 
