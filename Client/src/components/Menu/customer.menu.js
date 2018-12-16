@@ -1,17 +1,16 @@
 import React from 'react';
-import '../../css/navbar.css'
+import '../../css/navbar.css';
 
-export default function CustomerMenu(){
-    return(
+export default function CustomerMenu() {
+  return (
     <div className="dropdown">
-        <a class="dropbtn">Menu</a>
-        <div className="dropdown-content">
-          <a>Products</a>
-          <a>Workers</a>
-          <a>Private Info</a>
-          <a>Our Location</a>
-
-        </div>
+      <a class="dropbtn">Menu</a>
+      <div className="dropdown-content">
+        <a>Products</a>
+        <a href="/RateWorkers">Workers</a>
+        <a href="/AboutMe">Personal Info</a>
+        <a>Our Location</a>
+      </div>
     </div>
-    )
+  );
 }
