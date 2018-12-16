@@ -17,6 +17,8 @@ import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
 import Shift from './Routes/Shifts/Shift';
 import { AboutMe } from './Routes/AboutMe/AboutMe';
+import { RateWorkers } from './Routes/Workers/RateWorkers';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +43,7 @@ class App extends React.Component {
           <PrivateRoute path="/deleteWorker" component={deleteWorker} />
           <PrivateRoute path="/Shifts" component={Shift} />
           <PrivateRoute path="/AboutMe" component={AboutMe} />
+          <PrivateRoute path="/RateWorkers" component={RateWorkers} />
           <Route path="/login" component={LoginPage} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/about" component={About} />

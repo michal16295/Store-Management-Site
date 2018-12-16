@@ -7,7 +7,7 @@ export default function CustomerMenu() {
       <a class="dropbtn">Menu</a>
       <div className="dropdown-content">
         <a>Products</a>
-        <a>Workers</a>
+        <a href="/RateWorkers">Workers</a>
         <a href="/AboutMe">Personal Info</a>
         <a>Our Location</a>
       </div>
