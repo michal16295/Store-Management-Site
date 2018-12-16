@@ -18,7 +18,7 @@ import { deleteWorker } from "./Routes/Workers/deleteWorker";
 import Shift from "./Routes/Shifts/Shift";
 import { AboutMe } from "./Routes/AboutMe/AboutMe";
 import { RateWorkers } from "./Routes/Workers/RateWorkers";
-import { sLocation } from "./Routes/Customers/sLocation";
+import sLocation from "./Routes/Customers/sLocation";
 
 class App extends React.Component {
   constructor(props) {
