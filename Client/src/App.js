@@ -1,26 +1,6 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-<<<<<<< HEAD
-import { Navbar } from "./components/Navbar";
-import { LoginPage } from "./Routes/LoginPage";
-import { history } from "./helpers";
-import { alertActions } from "./actions";
-import { HomePage } from "./Routes/HomePage";
-import { ResetPassword } from "./Routes/ResetPassword";
-import { PrivateRoute } from "./Routes/PrivateRoute";
-import About from "./Routes/About";
-import Contacts from "./Routes/Contacts";
-import { addCustomer } from "./Routes/Customers/addCustomer";
-import { workersList } from "./Routes/Workers/workersList";
-import { addWorker } from "./Routes/Workers/addWorker";
-import { deleteWorker } from "./Routes/Workers/deleteWorker";
-import Shift from "./Routes/Shifts/Shift";
-import { AboutMe } from "./Routes/AboutMe/AboutMe";
-import { RateWorkers } from "./Routes/Workers/RateWorkers";
-import sLocation from "./Routes/Customers/sLocation";
-=======
 import { Navbar } from './components/Navbar';
 import { LoginPage } from './Routes/LoginPage';
 import { history } from './helpers';
@@ -37,9 +17,8 @@ import { deleteWorker } from './Routes/Workers/deleteWorker';
 import Shift from './Routes/Shifts/Shift';
 import { AboutMe } from './Routes/AboutMe/AboutMe';
 import { RateWorkers } from './Routes/Workers/RateWorkers';
-import { sLocation } from './Routes/Customers/sLocation';
+import sLocation from './Routes/Customers/sLocation';
 import Rate from './Routes/Workers/Rate';
->>>>>>> 3572004906a59bf9b0e48e8c0d922b4b6a8e78d8
 
 class App extends React.Component {
   constructor(props) {
