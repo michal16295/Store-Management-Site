@@ -1,0 +1,22 @@
+.buttonR {
+  background-color: #555555;
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 100rem;
+  margin-top: 2rem;
+  transition: all 0.2s;
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba(black, 0.2);
+  }
+  &:active {
+    //clicked
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba(black, 0.2);
+  }
+}
