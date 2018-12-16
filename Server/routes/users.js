@@ -154,7 +154,7 @@ router.put("update/:id",[auth], async(req, res)=>{
     return res.status(200).send(response); 
 });
 
-router.get("/", [auth, admin], async(req, res)=>{
+router.get("/", [auth], async(req, res)=>{
     const users = await User.find({role: "worker"}).select('-_id -__v -password -role');
 
     if(!users) return res.status(404).send("Error finding workers");
