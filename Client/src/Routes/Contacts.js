@@ -1,20 +1,15 @@
 import React from "react";
-
+import "../css/homepage.scss";
 export default function Contacts() {
   return (
     <div className="container-login100">
-      <h2>Contact info:</h2>
+      <div className="sub">
+        <h2>Contact info:</h2>
+      </div>
 
-      <br />
-      <br />
       <div>
         <span>
-          <h3>
-            <br />
-            <br />
-            <br />
-            <br /> E-mail: ATMDstore@gmail.com{" "}
-          </h3>
+          <h3>E-mail: ATMDstore@gmail.com </h3>
         </span>
       </div>
 
