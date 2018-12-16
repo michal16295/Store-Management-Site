@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../css/navbar.css';
+import React from "react";
+import "../../css/navbar.css";
 
 export default function CustomerMenu() {
   return (
@@ -9,7 +9,7 @@ export default function CustomerMenu() {
         <a>Products</a>
         <a href="/RateWorkers">Workers</a>
         <a href="/AboutMe">Personal Info</a>
-        <a>Our Location</a>
+        <a href="/sLocation">Our Location</a>
       </div>
     </div>
   );
