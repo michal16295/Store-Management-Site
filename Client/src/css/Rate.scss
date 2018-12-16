@@ -1,0 +1,17 @@
+.Rate-title {
+  display: inlie-block;
+  color: white;
+  padding: 1rem;
+}
+.container {
+  display: block;
+  Rate-Selector {
+    select {
+      padding: 5px;
+      color: red;
+    }
+  }
+}
+.Rate-Selector {
+  display: inline-block;
+}
