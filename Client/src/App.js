@@ -1,24 +1,25 @@
-import React from "react";
-import { Router, Route } from "react-router-dom";
-import { connect } from "react-redux";
+import React from 'react';
+import { Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { Navbar } from "./components/Navbar";
-import { LoginPage } from "./Routes/LoginPage";
-import { history } from "./helpers";
-import { alertActions } from "./actions";
-import { HomePage } from "./Routes/HomePage";
-import { ResetPassword } from "./Routes/ResetPassword";
-import { PrivateRoute } from "./Routes/PrivateRoute";
-import About from "./Routes/About";
-import Contacts from "./Routes/Contacts";
-import { addCustomer } from "./Routes/Customers/addCustomer";
-import { workersList } from "./Routes/Workers/workersList";
-import { addWorker } from "./Routes/Workers/addWorker";
-import { deleteWorker } from "./Routes/Workers/deleteWorker";
-import Shift from "./Routes/Shifts/Shift";
-import { AboutMe } from "./Routes/AboutMe/AboutMe";
-import { RateWorkers } from "./Routes/Workers/RateWorkers";
-import { sLocation } from "./Routes/Customers/sLocation";
+import { Navbar } from './components/Navbar';
+import { LoginPage } from './Routes/LoginPage';
+import { history } from './helpers';
+import { alertActions } from './actions';
+import { HomePage } from './Routes/HomePage';
+import { ResetPassword } from './Routes/ResetPassword';
+import { PrivateRoute } from './Routes/PrivateRoute';
+import About from './Routes/About';
+import Contacts from './Routes/Contacts';
+import { addCustomer } from './Routes/Customers/addCustomer';
+import { workersList } from './Routes/Workers/workersList';
+import { addWorker } from './Routes/Workers/addWorker';
+import { deleteWorker } from './Routes/Workers/deleteWorker';
+import Shift from './Routes/Shifts/Shift';
+import { AboutMe } from './Routes/AboutMe/AboutMe';
+import { RateWorkers } from './Routes/Workers/RateWorkers';
+import { sLocation } from './Routes/Customers/sLocation';
+import Rate from './Routes/Workers/Rate';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class App extends React.Component {
     return [
       <Navbar />,
       <Router history={history}>
-        <div style={{ paddingTop: 59 + "px", zIndex: 1 }}>
+        <div style={{ paddingTop: 59 + 'px', zIndex: 1 }}>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute path="/addCustomer" component={addCustomer} />
           <PrivateRoute path="/workers" component={workersList} />
@@ -46,6 +47,7 @@ class App extends React.Component {
           <PrivateRoute path="/AboutMe" component={AboutMe} />
           <PrivateRoute path="/sLocation" component={sLocation} />
           <PrivateRoute path="/RateWorkers" component={RateWorkers} />
+          <PrivateRoute path="/Rate/:id" component={Rate} />
           <Route path="/login" component={LoginPage} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/about" component={About} />

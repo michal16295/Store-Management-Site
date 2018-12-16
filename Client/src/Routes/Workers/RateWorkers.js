@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import '../../css/LoginPage.css';
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css';
+import '../../css/button.scss';
 
 import { userActions } from '../../actions';
 
@@ -28,6 +30,7 @@ class RateWorkers extends React.Component {
         <th>First Name:</th>
         <th>Last Name:</th>
         <th>Phone:</th>
+        <th>Rate The Worker</th>
       </tr>
     ];
     if (workers) {
@@ -38,6 +41,11 @@ class RateWorkers extends React.Component {
             <th>{worker.firstName}</th>
             <th>{worker.lastName}</th>
             <th>{worker.phone}</th>
+            <th>
+              <Link className="buttonR" to={`/Rate/${worker.id}`}>
+                Rate{' '}
+              </Link>
+            </th>
           </tr>
         );
         workersArray.push(row);
