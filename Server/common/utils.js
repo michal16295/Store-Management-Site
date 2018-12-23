@@ -14,6 +14,6 @@ exports.getSunday = function() {
 exports.getThursday = function() {
     const thursday = new Date();
     const day = thursday.getDay();
-    thursday.setDate(thursday.getDate() - day + 5);
+    thursday.setDate(thursday.getDate() - day + 4);
     return this.resetTime(thursday);
 }
