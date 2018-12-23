@@ -60,8 +60,10 @@ class workersList extends React.Component {
 }
 function mapStateToProps(state) {
     const { error, message } = state.alert;
+    const { items } = state.users;
     return {
-        workers: message,
+        message: message,
+        workers: items,
         error: error
     };
 }

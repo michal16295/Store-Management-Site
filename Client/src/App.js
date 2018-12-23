@@ -18,7 +18,6 @@ import Shift from './Routes/Shifts/Shift';
 import { AboutMe } from './Routes/AboutMe/AboutMe';
 import { RateWorkers } from './Routes/Workers/RateWorkers';
 import sLocation from './Routes/Customers/sLocation';
-import Rate from './Routes/Workers/Rate';
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +45,6 @@ class App extends React.Component {
           <PrivateRoute path="/AboutMe" component={AboutMe} />
           <PrivateRoute path="/sLocation" component={sLocation} />
           <PrivateRoute path="/RateWorkers" component={RateWorkers} />
-          <PrivateRoute path="/Rate/:id" component={Rate} />
           <Route path="/login" component={LoginPage} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/about" component={About} />

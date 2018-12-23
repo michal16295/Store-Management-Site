@@ -11,7 +11,8 @@ export const userActions = {
     newCustomer,
     newWorker,
     deleteWorker,
-    getWorkers
+    getWorkers,
+    rateWorker
 
 };
 
@@ -111,7 +112,6 @@ function getWorkers(){
             .then(
                 workers => { 
                     dispatch(success(workers));
-                    dispatch(alertActions.success(workers));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -167,6 +167,33 @@ function deleteWorker(userId){
     function success(message) { return { type: userConstants.DELETE_WORKER_SUCCESS, message } }
     function failure(error) { return { type: userConstants.DELETE_WORKER_FAILURE, error } }
 }
+ function rateWorker(ratings){
+    let rates = [];
+    Object.keys(ratings).forEach(key=> {
+        const rate = {
+            id: parseInt(key),
+            rating: ratings[key]
+        }
+        rates.push(rate);
+    });
+    return dispatch=>{
+        dispatch(request({ rates }));
+        userService.rateWorker(rates)
+            .then(
+                message => { 
+                    dispatch(success(message));
+                    dispatch(alertActions.success(message));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request(rates) { return { type: userConstants.RATE_WORKER_REQUEST, rates } }
+    function success(message) { return { type: userConstants.RATE_WORKER_SUCCESS, message } }
+    function failure(error) { return { type: userConstants.RATE_WORKER_FAILURE, error } }
+ }
 
 
 

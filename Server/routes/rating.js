@@ -12,22 +12,32 @@ router.post('/new', [auth, customer], async (req, res) => {
     const { error } = Validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let worker = await User.findOne({ id: req.body.id , role: "worker"});
-    if (!worker) return res.status(404).send("Worker doesnt exists");
-
-    req.body.date = utils.resetTime(new Date());
-    let rating = await Ratings.findOne({date: req.body.date, worker_id: worker._id, customer_id: req.user._id});
-    if(rating) return res.status(400).send("Rating already placed for today");
+    const keys = req.body;
+    let updated = 0;
+    for (let i = 0; i < keys.length; ++i) {
+        const rate = keys[i];
+        let worker = await User.findOne({ id: rate.id , role: "worker"});
+        if (!worker) return res.status(404).send("Worker doesnt exists");
     
-    rating = {
-        date: utils.resetTime(new Date()),
-        worker_id: worker._id,
-        customer_id: req.user._id,
-        rating: req.body.rating
+        rate.date = utils.resetTime(new Date());
+        let rating = await Ratings.findOne({date: rate.date, worker_id: worker._id, customer_id: req.user._id});
+        if (rating) {
+            continue;
+        }
+        
+        rating = {
+            date: utils.resetTime(new Date()),
+            worker_id: worker._id,
+            customer_id: req.user._id,
+            rating: rate.rating
+        }
+        
+        rating = await Ratings.create(rating);
+        if (!rating) return res.status(400).send("Error - rating wasn't placed"); 
+        
+        updated++;
     }
-    
-    rating = await Ratings.create(rating);
-    if (!rating) return res.status(400).send("Error - rating wasn't placed");
+    if(updated == 0) return res.status(400).send("Rating already placed for today");
 
     const response = {
         message: "Rating placed successfully"
@@ -54,10 +64,10 @@ router.get('/get', [auth, admin], async(req, res)=>{
 });
 
 function Validate(req){
-    const schema = {
-        id: Joi.number().min(1).required(),
-        rating: Joi.number().min(1).max(5).required()
-    };
+    const schema = Joi.array().items({
+            id: Joi.number().min(1).required(),
+            rating: Joi.number().min(1).max(5).required()
+        });
     return Joi.validate(req , schema);
 }
 module.exports = router;

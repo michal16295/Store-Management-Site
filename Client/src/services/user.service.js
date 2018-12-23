@@ -11,7 +11,8 @@ export const userService = {
     newCustomer,
     newWorker,
     deleteWorker,
-    getWorkers
+    getWorkers,
+    rateWorker
 
 };
 
@@ -63,6 +64,16 @@ function newWorker(user) {
 function deleteWorker(userId) {
     const requestOptions = request.deleteRequest();
     return fetch(serverAddress + "/users/" + userId, requestOptions).then(handleResponse)
+    .then(message => {
+        return message;
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+function rateWorker(ratings){
+    const requestOptions = request.postRequest(ratings);
+    return fetch(serverAddress + "/rating/new" , requestOptions).then(handleResponse)
     .then(message => {
         return message;
     }).catch(err => {

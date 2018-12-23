@@ -15,6 +15,18 @@ export function users(state = {}, action) {
       return { 
         error: action.error
       };
+      case userConstants.GETWORKERS_REQUEST:
+      return {
+        
+      };
+    case userConstants.GETWORKERS_SUCCESS:
+      return {
+        items: action.workers
+      };
+    case userConstants.GETWORKERS_FAILURE:
+      return { 
+        error: action.error
+      };
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {

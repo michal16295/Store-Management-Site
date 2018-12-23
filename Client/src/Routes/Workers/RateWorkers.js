@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import StarRatingComponent from 'react-star-rating-component';
 import '../../css/LoginPage.css';
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
@@ -12,18 +13,45 @@ import { userActions } from '../../actions';
 class RateWorkers extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state ={
+      rating: {},
+    };
+    
     this.loadWorkers = this.loadWorkers.bind(this);
+    this.onStarClick = this.onStarClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.loadWorkers();
   }
 
   loadWorkers() {
     const { dispatch } = this.props;
     dispatch(userActions.getWorkers());
+
   }
+  onStarClick(prevValue, nextValue, name) {
+    const { rating } = this.state;
+    console.log(name);
+    this.setState({
+      rating: {
+          ...rating,
+          [name]: prevValue
+      }
+  });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const { rating } = this.state;
+    const { dispatch } = this.props;
+    if (Object.keys(rating).length > 0) {
+        dispatch(userActions.rateWorker(rating));
+    }
+}
 
   render() {
     const { workers } = this.props;
+    const { rating } = this.state;
     let workersArray = [
       <tr id="0" key="0">
         <th>ID:</th>
@@ -34,6 +62,7 @@ class RateWorkers extends React.Component {
       </tr>
     ];
     if (workers) {
+      console.log(workers);
       workers.forEach(worker => {
         let row = (
           <tr id={worker.id} key={worker.id}>
@@ -42,9 +71,12 @@ class RateWorkers extends React.Component {
             <th>{worker.lastName}</th>
             <th>{worker.phone}</th>
             <th>
-              <Link className="buttonR" to={`/Rate/${worker.id}`}>
-                Rate{' '}
-              </Link>
+            <StarRatingComponent 
+            name= {worker.id}
+            starCount={5}
+            value={rating[worker.id]}
+            onStarClick={this.onStarClick}
+            />
             </th>
           </tr>
         );
@@ -54,7 +86,13 @@ class RateWorkers extends React.Component {
     let list = (
       <div>
         <table>{workersArray}</table>
+        <div class="container-login100-form-btn">
+              <button class="login100-form-btn"  onClick={this.handleSubmit}>
+                Submit
+              </button><br/>
+        </div>
       </div>
+      
     );
     return (
       <div className="limiter">
@@ -74,12 +112,14 @@ class RateWorkers extends React.Component {
   }
 }
 function mapStateToProps(state) {
+  console.log(state.users.items)
   const { error, message } = state.alert;
+  const { items } = state.users;
   return {
-    workers: message,
+    message: message,
+    workers: items,
     error: error
   };
 }
-
 const connectedWorkersList = connect(mapStateToProps)(RateWorkers);
 export { connectedWorkersList as RateWorkers };
