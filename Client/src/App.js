@@ -15,8 +15,11 @@ import { workersList } from './Routes/Workers/workersList';
 import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
 import Shift from './Routes/Shifts/Shift';
+import { Order } from './Routes/Products/order';
 import { AboutMe } from './Routes/AboutMe/AboutMe';
 import { RateWorkers } from './Routes/Workers/RateWorkers';
+import { addProduct } from './Routes/Products/addProduct';
+import { productsList } from './Routes/Products/productsList';
 import sLocation from './Routes/Customers/sLocation';
 
 class App extends React.Component {
@@ -38,6 +41,9 @@ class App extends React.Component {
         <div style={{ paddingTop: 59 + 'px', zIndex: 1 }}>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute path="/addCustomer" component={addCustomer} />
+          <PrivateRoute path="/addProduct" component={addProduct} />
+          <PrivateRoute path="/products" component={productsList} />
+          <PrivateRoute path="/order/*" component={Order} />
           <PrivateRoute path="/workers" component={workersList} />
           <PrivateRoute path="/addWorker" component={addWorker} />
           <PrivateRoute path="/deleteWorker" component={deleteWorker} />

@@ -69,6 +69,19 @@ router.put('/buy/:id', [auth, admin], async(req, res)=>{
 
     return res.status(200).send(response); 
 });
+
+router.get('/', [auth], async(req, res)=>{
+    const products = await Product.find().select("-_id -__v -buyingPrice");
+    if(!products) return res.status(404).send("ERROR - Finding products");
+    return res.status(200).send(products);
+});
+
+router.get('/:id', [auth], async(req, res)=>{
+    const products = await Product.findOne({id: req.params.id }).select("-_id -__v -sellingPrice");
+    if(!products) return res.status(404).send("ERROR - Finding products");
+    return res.status(200).send(products);
+});
+
 // selling items
 router.put('/sell/:id', [auth], async(req, res)=>{
     let productID = parseInt(req.params.id);

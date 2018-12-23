@@ -6,10 +6,11 @@ export default function CustomerMenu() {
     <div className="dropdown">
       <a class="dropbtn">Menu</a>
       <div className="dropdown-content">
-        <a>Products</a>
         <a href="/RateWorkers">Workers</a>
         <a href="/AboutMe">Personal Info</a>
         <a href="/sLocation">Our Location</a>
+        <a href="/products">Products</a>
+
       </div>
     </div>
   );
