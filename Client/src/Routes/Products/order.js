@@ -45,7 +45,6 @@ class Order extends React.Component {
     loadProduct() {
         const { dispatch, match } = this.props;
         const id = parseInt(match.params[0]);
-        console.log(id);
         dispatch(productsActions.getProduct(id));
     }
 

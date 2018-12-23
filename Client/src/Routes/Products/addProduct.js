@@ -42,7 +42,6 @@ class addProduct extends React.Component {
         const { product } = this.state;
         const { dispatch } = this.props;
         if (product.name && product.id && product.sellingPrice && product.buyingPrice) {
-            //TODO
             dispatch(productsActions.addProduct(product));
         }
         

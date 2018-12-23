@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
     try {
         const decoded = jwt.verify(token, config.secretKey());
         req.user = decoded;
-        if (req.user.id == 4) return res.status(403).send('Access denied');
         next();
     }
     catch (ex) {
