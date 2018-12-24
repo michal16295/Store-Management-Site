@@ -4,7 +4,7 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { productsActions } from '../../actions';
 
@@ -12,6 +12,7 @@ import { productsActions } from '../../actions';
 class productsList extends React.Component {
     constructor(props) {
         super(props);
+
 
         this.loadProducts = this.loadProducts.bind(this);
         this.loadProducts();
@@ -30,7 +31,7 @@ class productsList extends React.Component {
         else{
             if(id){
             dispatch(productsActions.deleteProduct(id));
-        }
+            }
         }
         
     }
