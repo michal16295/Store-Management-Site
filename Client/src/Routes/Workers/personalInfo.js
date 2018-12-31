@@ -106,11 +106,14 @@ class personalInfo extends React.Component {
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     const { id } = state.authentication.user;
-    let allowEdit = false;
     let items = null;
     if (state.users) {
       items = state.users.items;
-      allowEdit = true;
+    }
+    if (message) {
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000)
     }
 
     return {
@@ -118,7 +121,6 @@ function mapStateToProps(state) {
         userId: id,
         user: items,
         error: error,
-        allowEdit: allowEdit
     };
 }
 

@@ -147,19 +147,16 @@ router.put("/update/:id",[auth], async(req, res)=>{
     const user = await User.findOne({id: userId});
     if(!user) return res.status(404).send("The user not found");
 
-    if (req.body.firstName === '')
-        req.body.firstName = undefined;
-    if (req.body.lastName === '')
-        req.body.lastName = undefined;
-    if (req.body.phone === '')
-        req.body.phone = undefined;
-    await User.update({id: userId}, {
-        $set:{
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phone: req.body.phone,
-        }
+    let objForUpdate = {};
+
+    if (req.body.firstName !== '') objForUpdate.firstName = req.body.firstName;
+    if (req.body.lastName !== '') objForUpdate.lastName = req.body.lastName;
+    if (req.body.phone !== '') objForUpdate.phone = req.body.phone;
+
+    await User.updateOne({id: userId}, {
+        $set: objForUpdate
     });
+    
     const response = {
         message: "User updated successfully"
     }
@@ -213,11 +210,11 @@ function ValidateUpdate(req) {
     let lastNameCheck = Joi.string().min(3).max(255).required();
     let phoneCheck =Joi.string().min(10).max(10).regex(/^\d+$/).required();
     if (req.firstName === '')
-        firstNameCheck = Joi.string();
+        firstNameCheck = Joi.string().allow('').optional();
     if (req.lastName === '')
-        lastNameCheck = Joi.string();
+        lastNameCheck = Joi.string().allow('').optional();
     if (req.phone === '')
-        phoneCheck = Joi.string();
+        phoneCheck = Joi.string().allow('').optional();
     const schema = {
         firstName: firstNameCheck,
         lastName: lastNameCheck,

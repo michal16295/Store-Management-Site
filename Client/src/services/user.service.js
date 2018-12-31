@@ -173,6 +173,9 @@ function updateUser(id, user) {
     const requestOptions = request.putRequest(user);
     return fetch(serverAddress + "/users/update/" + id , requestOptions).then(handleResponse)
     .then(message =>{
+        let localUser = JSON.parse(localStorage.getItem('user'));
+        localUser.firstName = user.firstName;
+        localStorage.setItem('user', JSON.stringify(localUser));
         return message;
     }).catch(err =>{
         return Promise.reject(err);
