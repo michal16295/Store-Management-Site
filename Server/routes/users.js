@@ -25,7 +25,9 @@ router.post("/login" , async(req , res) => {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role
+        role: user.role,
+        points: user.points
+
     };
     res.send(response);
 });
@@ -134,13 +136,24 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
     return res.status(200).send(response); 
 });
 
-router.put("update/:id",[auth], async(req, res)=>{
+router.put("/update/:id",[auth], async(req, res)=>{
+    console.log(req.body);
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
     
+    const { error } = ValidateUpdate(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+
     const user = await User.findOne({id: userId});
     if(!user) return res.status(404).send("The user not found");
-    await User.update({_id: userID}, {
+
+    if (req.body.firstName === '')
+        req.body.firstName = undefined;
+    if (req.body.lastName === '')
+        req.body.lastName = undefined;
+    if (req.body.phone === '')
+        req.body.phone = undefined;
+    await User.update({id: userId}, {
         $set:{
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -160,6 +173,13 @@ router.get("/", [auth], async(req, res)=>{
     if(!users) return res.status(404).send("Error finding workers");
 
     return res.status(200).send(users);
+});
+router.get("/:id", [auth], async(req, res)=>{
+    let userId = parseInt(req.params.id);
+    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
+    let user = await User.findOne({id: userId}).select('-_id -password');
+    if(!user) return res.status(404).send("The user not found");
+    return res.status(200).send(user); 
 });
 
 function ValidateResetPassword(req){
@@ -187,6 +207,23 @@ function ValidateNewUser(req){
         phone: Joi.string().min(10).max(10).regex(/^\d+$/).required()
     };
     return Joi.validate(req , schema);
+}
+function ValidateUpdate(req) {
+    let firstNameCheck = Joi.string().min(3).max(255).required();
+    let lastNameCheck = Joi.string().min(3).max(255).required();
+    let phoneCheck =Joi.string().min(10).max(10).regex(/^\d+$/).required();
+    if (req.firstName === '')
+        firstNameCheck = Joi.string();
+    if (req.lastName === '')
+        lastNameCheck = Joi.string();
+    if (req.phone === '')
+        phoneCheck = Joi.string();
+    const schema = {
+        firstName: firstNameCheck,
+        lastName: lastNameCheck,
+        phone: phoneCheck
+    };
+    return Joi.validate(req, schema);
 }
 
 module.exports = router;

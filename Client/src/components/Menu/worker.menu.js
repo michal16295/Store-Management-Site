@@ -12,7 +12,7 @@ export default function WorkerMenu() {
         <a href="/addProduct">Add Product</a>
         <a>Find Customer</a>
         <a href="./Shifts">Shifts</a>
-        <a href="/AboutMe">Personal Info</a>
+        <a href="/personalInfo">Personal Info</a>
       </div>
     </div>
   );

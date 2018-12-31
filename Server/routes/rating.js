@@ -45,7 +45,7 @@ router.post('/new', [auth, customer], async (req, res) => {
     return res.status(200).send(response);
 });
 
-router.get('/get', [auth, admin], async(req, res)=>{
+router.get('/', [auth, admin], async(req, res)=>{
     let ratings = await Ratings.aggregate([
         { $group: {
             _id: "$worker_id",
@@ -56,9 +56,9 @@ router.get('/get', [auth, admin], async(req, res)=>{
     }
     ]);
 
-    ratings = await Ratings.populate(ratings,{ path : "worker_id", options:{select: {firstName: 1, lastName: 1 }}});
+    ratings = await Ratings.populate(ratings,{ path : "worker_id", options:{select: {id: 1, firstName: 1, lastName: 1 }}});
     ratings = ratings.map(rating => {
-        return {rating: rating.rating, name:rating.worker_id.firstName + " " + rating.worker_id.lastName}
+        return {rating: rating.rating, name:rating.worker_id.firstName + " " + rating.worker_id.lastName, id:rating.worker_id.id}
     });
     return res.status(200).send(ratings);
 });

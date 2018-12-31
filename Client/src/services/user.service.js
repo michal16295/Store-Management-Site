@@ -12,7 +12,10 @@ export const userService = {
     newWorker,
     deleteWorker,
     getWorkers,
-    rateWorker
+    rateWorker,
+    getRatings,
+    getWorker,
+    updateUser
 
 };
 
@@ -143,4 +146,37 @@ function handleResponse(response) {
         return data;
     });
 }   
+function getRatings() {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/ratings', requestOptions)
+        .then(handleResponse)
+        .then(ratings => {
+            return ratings;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+}
+
+function getWorker(workerId) {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/users/' + workerId, requestOptions)
+        .then(handleResponse)
+        .then(worker => {
+            return worker;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+}
+function updateUser(id, user) {
+    const requestOptions = request.putRequest(user);
+    return fetch(serverAddress + "/users/update/" + id , requestOptions).then(handleResponse)
+    .then(message =>{
+        return message;
+    }).catch(err =>{
+        return Promise.reject(err);
+    });
+}
+
 

@@ -15,7 +15,7 @@ export function users(state = {}, action) {
       return { 
         error: action.error
       };
-      case userConstants.GETWORKERS_REQUEST:
+    case userConstants.GETWORKERS_REQUEST:
       return {
         
       };
@@ -24,6 +24,42 @@ export function users(state = {}, action) {
         items: action.workers
       };
     case userConstants.GETWORKERS_FAILURE:
+      return { 
+        error: action.error
+      };
+    case userConstants.UPDATE_USER_REQUEST:
+      return {
+        
+      };
+    case userConstants.UPDATE_USER_SUCCESS:
+      return {
+        items: action.message
+      };
+    case userConstants.UPDATE_USER_FAILURE:
+      return { 
+        error: action.error
+      };
+    case userConstants.GET_WORKER_REQUEST:
+      return {
+        
+      };
+    case userConstants.GET_WORKER_SUCCESS:
+      return {
+        items: action.worker
+      };
+    case userConstants.GET_WORKER_FAILURE:
+      return { 
+        error: action.error
+      };
+    case userConstants.GET_RATINGS_REQUEST:
+      return {
+        
+      };
+    case userConstants.GET_RATINGS_SUCCESS:
+      return {
+        items: action.ratings
+      };
+    case userConstants.GET_RATINGS_FAILURE:
       return { 
         error: action.error
       };

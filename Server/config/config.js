@@ -16,7 +16,7 @@ const setRoutes = (app) => {
     app.use('/users', users);
     app.use('/products', products);
     app.use('/shifts', shifts);
-    app.use('/rating', rating);
+    app.use('/ratings', rating);
 }
 
 // Connect to Database

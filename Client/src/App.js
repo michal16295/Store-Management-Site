@@ -16,10 +16,11 @@ import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
 import Shift from './Routes/Shifts/Shift';
 import { Order } from './Routes/Products/order';
-import { AboutMe } from './Routes/AboutMe/AboutMe';
+import { personalInfo } from './Routes/Workers/personalInfo';
 import { RateWorkers } from './Routes/Workers/RateWorkers';
 import { addProduct } from './Routes/Products/addProduct';
 import { productsList } from './Routes/Products/productsList';
+import { rateList } from './Routes/Workers/rateList';
 import sLocation from './Routes/Customers/sLocation';
 
 class App extends React.Component {
@@ -48,9 +49,10 @@ class App extends React.Component {
           <PrivateRoute path="/addWorker" component={addWorker} />
           <PrivateRoute path="/deleteWorker" component={deleteWorker} />
           <PrivateRoute path="/Shifts" component={Shift} />
-          <PrivateRoute path="/AboutMe" component={AboutMe} />
+          <PrivateRoute path="/personalInfo" component={personalInfo} />
           <PrivateRoute path="/sLocation" component={sLocation} />
           <PrivateRoute path="/RateWorkers" component={RateWorkers} />
+          <PrivateRoute path="/rateList" component={rateList} />
           <Route path="/login" component={LoginPage} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/about" component={About} />
