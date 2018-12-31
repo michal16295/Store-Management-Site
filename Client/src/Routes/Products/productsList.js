@@ -62,8 +62,8 @@ class productsList extends React.Component {
                             <th>{product.quantity}</th>
                             <th>{product.sellingPrice}</th>
                             <th>
-                                <a className="fas fa-plus-circle fa-2x" style={{color: "lime", textDecoration: "none"}} href={`/Order/${product.id}`} />
-                                <button className="fas fa-minus-circle fa-2x" style={{color: "red", textDecoration: "none"}} name="id" value = {product.id} onClick={this.handleDelete.bind(this, product.id, product.quantity)}></button>
+                                <a className="fas fa-plus-circle fa-2x" style={{color: "lime", textDecoration: "none"}} href={`/Order/${product.id}`} title="Order items to store" />
+                                <button className="fas fa-minus-circle fa-2x" style={{color: "red", textDecoration: "none"}} name="id" value = {product.id} onClick={this.handleDelete.bind(this, product.id, product.quantity)} title="Delete product from database" />
                             </th>
                         </tr>
                     );
