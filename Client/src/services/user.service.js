@@ -170,13 +170,18 @@ function getWorker(workerId) {
             return Promise.reject(err);
         });
 }
+
+function updateLocalStorage(user) {
+    if (!user || !user.firstName || user.firstName.length < 3) return;
+    let localUser = JSON.parse(localStorage.getItem('user'));
+    localUser.firstName = user.firstName;
+    localStorage.setItem('user', JSON.stringify(localUser));
+}
 function updateUser(id, user) {
     const requestOptions = request.putRequest(user);
     return fetch(serverAddress + "/users/update/" + id , requestOptions).then(handleResponse)
     .then(message =>{
-        let localUser = JSON.parse(localStorage.getItem('user'));
-        localUser.firstName = user.firstName;
-        localStorage.setItem('user', JSON.stringify(localUser));
+        updateLocalStorage(user);
         return message;
     }).catch(err =>{
         return Promise.reject(err);

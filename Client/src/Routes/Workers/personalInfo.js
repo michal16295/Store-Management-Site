@@ -17,6 +17,7 @@ class personalInfo extends React.Component {
           firstName:'',
           lastName:'',
           phone: '',
+          user: null
         }
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -52,10 +53,14 @@ class personalInfo extends React.Component {
     }
 
     render() {
-      const { user } = this.props;
+      let { user } = this.props;
+      if (!user && this.state.user) {
+          user = this.state.user;
+      }
       const { firstName, lastName, phone } = this.state;
       let info = null;
       if (user) {
+        this.state.user = user; // Don't use setState because we don't need to re-render
         info = !this.state.edit ? (<div>
             <div className="product-cont">
                 <div className="product">ID: {user.id}</div>
@@ -88,7 +93,7 @@ class personalInfo extends React.Component {
                 <button class="login100-form-btn"  onClick={this.handleSubmit}>
                   Submit
                 </button><br/>
-                <a class="login100-form-btn" style={{ textDecoration: 'none' }} href="/" >cancle</a>
+                <a class="login100-form-btn" style={{ textDecoration: 'none' }} href="/" >Cancel</a>
           </div>
         </div>);
       }
