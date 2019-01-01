@@ -57,8 +57,9 @@ router.get('/', [auth, admin], async(req, res)=>{
     ]);
     
     ratings = await Ratings.populate(ratings,{ path : "worker_id", options:{select: {id: 1, firstName: 1, lastName: 1 }}});
+    ratings = ratings.filter(rating => { return rating.worker_id != null; });
     ratings = ratings.map(rating => {
-        return {rating: rating.rating, name:rating.worker_id.firstName + " " + rating.worker_id.lastName, id:rating.worker_id.id}
+        return { rating: rating.rating, name: rating.worker_id.firstName + " " + rating.worker_id.lastName, id: rating.worker_id.id }
     });
     if(!ratings) return res.status(404).send("Ratings not found");
     return res.status(200).send(ratings);
