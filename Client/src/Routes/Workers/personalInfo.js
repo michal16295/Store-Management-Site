@@ -4,6 +4,7 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css';
+import { Link, Redirect } from 'react-router-dom';
 
 import { userActions } from '../../actions';
 
@@ -56,10 +57,12 @@ class personalInfo extends React.Component {
       let info = null;
       if (user) {
         info = !this.state.edit ? (<div>
-          <div>ID: {user.id}</div>
-          <div>Name: {user.firstName + " " + user.lastName}</div>
-          <div>Phone: {user.phone}</div>
-          <div>Role: {user.role}</div>
+            <div className="product-cont">
+                <div className="product">ID: {user.id}</div>
+                <div className="product">Name: {user.firstName + " " + user.lastName}</div>
+                <div className="product">Phone: {user.phone}</div>
+                <div className="product">Role: {user.role}</div>
+            </div>
           <div class="container-login100-form-btn">
           <button class="login100-form-btn"  onClick={this.handleEdit}>
             Edit
@@ -67,23 +70,25 @@ class personalInfo extends React.Component {
           </div>
       </div>) : (<div>
           <form method="put" class="login100-form validate-form">
-          <div>ID: {user.id}</div>
-           <div>First Name: <div class="wrap-input100 validate-input" data-validate="Enter First Name">
-                    <input class="input100" type="text" name="firstName" placeholder={user.firstName} value={firstName} onChange={this.handleChange}/>
-                        </div></div>
-            <div>Last Name: <div class="wrap-input100 validate-input" data-validate="Enter Last Name">
-                    <input class="input100" type="text" name="lastName" placeholder={user.lastName} value={lastName} onChange={this.handleChange}/>
-                        </div></div>
-            <div>Phone: <div class="wrap-input100 validate-input" data-validate="Enter Phone Number">
-                    <input class="input100" type="text" name="phone" placeholder={user.phone} value={phone} onChange={this.handleChange}/>
-                        </div></div>
-                        </form>
-          <div>Role: {user.role}</div>
+          <div id="personal-info" class="wrap-input100" >ID: {user.id}</div>
+           <label id="personal-info"  class="wrap-input100 validate-input" data-validate="Enter First Name">First Name: 
+                    <input id="personal-input" type="text" name="firstName" placeholder={user.firstName} value={firstName} onChange={this.handleChange}/>
+            </label>
 
+            <label id="personal-info" class="wrap-input100 validate-input" data-validate="Enter Last Name">Last Name: 
+                    <input id="personal-input" type="text" name="lastName" placeholder={user.lastName} value={lastName} onChange={this.handleChange}/>
+            </label>
+
+            <label id="personal-info" class="wrap-input100 validate-input" data-validate="Enter Phone Number">Phone: 
+                    <input id="personal-input" type="text" name="phone" placeholder={user.phone} value={phone} onChange={this.handleChange}/>
+            </label>
+          <div id="personal-info" class="wrap-input100">Role: {user.role}</div>
+          </form>
           <div class="container-login100-form-btn">
                 <button class="login100-form-btn"  onClick={this.handleSubmit}>
                   Submit
                 </button><br/>
+                <a class="login100-form-btn" style={{ textDecoration: 'none' }} href="/" >cancle</a>
           </div>
         </div>);
       }
@@ -91,6 +96,9 @@ class personalInfo extends React.Component {
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100">
+                    <span class="login100-form-logo">
+                        <i class="fas fa-info-circle fa-2x " ></i>
+                    </span>
                     <span class="login100-form-title p-b-34 p-t-27">
                         Personal Info
                     </span>

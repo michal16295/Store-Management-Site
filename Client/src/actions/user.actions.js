@@ -15,7 +15,8 @@ export const userActions = {
     rateWorker,
     getRatings,
     getWorker,
-    updateUser
+    updateUser,
+    getCustomer
 
 };
 
@@ -257,6 +258,26 @@ function updateUser(id, user) {
     function request(user) { return { type: userConstants.UPDATE_USER_REQUEST, user } }
     function success(message) { return { type: userConstants.UPDATE_USER_SUCCESS, message } }
     function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
+}
+function getCustomer(customerId) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getCustomer(customerId)
+            .then(
+                customer => { 
+                    dispatch(success(customer));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.GET_CUSTOMER_REQUEST } }
+    function success(customer) { return { type: userConstants.GET_CUSTOMER_SUCCESS, customer } }
+    function failure(error) { return { type: userConstants.GET_CUSTOMER_FAILURE, error } }
 }
  
 

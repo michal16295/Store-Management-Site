@@ -47,6 +47,9 @@ class rateList extends React.Component {
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100">
+                    <span class="logo-star">
+                    <i class="fas fa-star fa-2x" style={{color: "gold"}}></i>
+                    </span>
                     <span class="login100-form-title p-b-34 p-t-27">
                         Workers Ratings
                     </span>

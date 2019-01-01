@@ -83,7 +83,8 @@ router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
         lastName: req.body.lastName,
         phone: req.body.phone,
         id: req.body.id,
-        password: newPassword
+        password: newPassword,
+        points: 30
     }
     user = await User.create(user);
     if (!user) return res.status(400).send("ERROR - User wasn't created!");
@@ -177,6 +178,13 @@ router.get("/:id", [auth], async(req, res)=>{
     let user = await User.findOne({id: userId}).select('-_id -password');
     if(!user) return res.status(404).send("The user not found");
     return res.status(200).send(user); 
+});
+router.get("/customer/:id", [auth, adminOrWorker], async(req, res)=>{
+    let userId = parseInt(req.params.id);
+    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
+    let customer = await User.findOne({id: userId, role:"customer"}).select('-_id -password');
+    if(!customer) return res.status(404).send("The customer not found");
+    return res.status(200).send(customer); 
 });
 
 function ValidateResetPassword(req){

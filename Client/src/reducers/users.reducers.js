@@ -51,6 +51,20 @@ export function users(state = {}, action) {
       return { 
         error: action.error
       };
+
+    case userConstants.GET_CUSTOMER_REQUEST:
+      return {
+        
+      };
+    case userConstants.GET_CUSTOMER_SUCCESS:
+      return {
+        items: action.customer
+      };
+    case userConstants.GET_CUSTOMER_FAILURE:
+      return { 
+        error: action.error
+      };
+
     case userConstants.GET_RATINGS_REQUEST:
       return {
         

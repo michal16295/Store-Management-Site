@@ -10,7 +10,7 @@ export default function WorkerMenu() {
         <a>Workers</a>
         <a href="/addCustomer">Add Customers</a>
         <a href="/addProduct">Add Product</a>
-        <a>Find Customer</a>
+        <a href="searchCustomer">Search Customer</a>
         <a href="./Shifts">Shifts</a>
         <a href="/personalInfo">Personal Info</a>
       </div>

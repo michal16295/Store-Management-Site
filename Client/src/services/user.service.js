@@ -15,7 +15,8 @@ export const userService = {
     rateWorker,
     getRatings,
     getWorker,
-    updateUser
+    updateUser,
+    getCustomer
 
 };
 
@@ -76,7 +77,7 @@ function deleteWorker(userId) {
 
 function rateWorker(ratings){
     const requestOptions = request.postRequest(ratings);
-    return fetch(serverAddress + "/rating/new" , requestOptions).then(handleResponse)
+    return fetch(serverAddress + "/ratings/new" , requestOptions).then(handleResponse)
     .then(message => {
         return message;
     }).catch(err => {
@@ -180,6 +181,17 @@ function updateUser(id, user) {
     }).catch(err =>{
         return Promise.reject(err);
     });
+}
+function getCustomer(customerId) {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/users/customer/' + customerId, requestOptions)
+        .then(handleResponse)
+        .then(customer => {
+            return customer;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
 }
 
 

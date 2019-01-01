@@ -13,8 +13,8 @@ export default function AdminMenu() {
         <a href="/addWorker">Add Worker</a>
         <a href="/deleteWorker">Delete Worker</a>
         <a href="/addCustomer">Add Customers</a>
-        <a>Search Customer</a>
-        <a href="/AboutMe">Personal Info</a>
+        <a href="searchCustomer">Search Customer</a>
+        <a href="/personalInfo">Personal Info</a>
         <a>Salary</a>
         <a href="./Shifts">Shifts</a>
       </div>
