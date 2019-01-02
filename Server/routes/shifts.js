@@ -12,35 +12,55 @@ router.post("/create", [auth, worker], async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    req.body.date = utils.resetTime(req.body.date);
-    const sunday = utils.getSunday();
-
-    if (req.body.date < sunday) return res.status(400).send("Can't place a shift in the past");
-
-    let shift = await Shift.findOne({ date: { $eq: req.body.date }, shift: req.body.shift });
-    if (shift) return res.status(400).send("Shift already taken");
-
     const user = await User.findOne({ id: req.user.id });
     if (!user) return res.status(400).send("Error finding the user");
 
-    shift = {
-        date: req.body.date,
-        shift: req.body.shift,
-        userName: user.firstName + " " + user.lastName
+    const keys = req.body;
+    const now = utils.resetTime(new Date());
+    let updated = 0;
+    for (let i = 0; i < keys.length; ++i) {
+        const shift = keys[i];
+
+        shift.date = utils.resetTime(shift.date);
+        if (shift.date.valueOf() < now.valueOf()) {
+            continue;
+        }
+
+        let s = await Shift.findOne({ date: shift.date , shift: shift.shift });
+        if (s) {
+            continue;
+        }
+
+        s = {
+            shift: shift.shift,
+            date: shift.date,
+            userName: user.firstName + " " + user.lastName,
+            userId: req.user.id
+        }
+
+        s = await Shift.create(s);
+        if (!s) return res.status(400).send("Error - Shift wasn't placed");
+
+        updated++;
     }
-    
-    shift = await Shift.create(shift);
-    if (!shift) return res.status(400).send("Error - Shift wasn't placed");
+    if(updated == 0) return res.status(400).send("Shifts already placed for the dates");
 
     const response = {
-        message: "Shift placed successfully"
+        message: "Shifts placed successfully"
     }
     return res.status(200).send(response);
 });
 
-router.get("/", [auth, adminOrWorker], async (req, res) => {
-    const sunday = utils.getSunday();
-    const thursday = utils.getThursday();
+router.get("/:week", [auth, adminOrWorker], async (req, res) => {
+    let week = req.params.week;
+    if (!week) week = 0;
+    if (isNaN(week)) return res.status(400).send("Bad request - week must be a number");
+
+    const date = new Date();
+    date.setDate(date.getDate() + 7 * week);
+
+    const sunday = utils.getSunday(date);
+    const thursday = utils.getThursday(date);
 
     let shifts = await Shift.find({ date: { $gte: sunday, $lte: thursday }});
 
@@ -55,6 +75,11 @@ router.delete("/delete/:id", [auth, admin], async (req, res) => {
     
     const shift = await Shift.findOne({ _id: shiftId });
     if (!shift) return res.status(404).send("The shift was not found");
+
+    const today = utils.resetTime(new Date());
+    shift.date = utils.resetTime(shift.date);
+    if (shift.date.valueOf() < today.valueOf())
+        return res.status(400).send("Error - you can't delete a shift older than today");
 
     await Shift.deleteOne(shift);
 

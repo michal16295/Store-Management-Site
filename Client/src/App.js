@@ -14,7 +14,7 @@ import { addCustomer } from './Routes/Customers/addCustomer';
 import { workersList } from './Routes/Workers/workersList';
 import { addWorker } from './Routes/Workers/addWorker';
 import { deleteWorker } from './Routes/Workers/deleteWorker';
-import Shift from './Routes/Shifts/Shift';
+import { Shift } from './Routes/Shifts/Shift';
 import { Order } from './Routes/Products/order';
 import { personalInfo } from './Routes/Workers/personalInfo';
 import { RateWorkers } from './Routes/Workers/RateWorkers';

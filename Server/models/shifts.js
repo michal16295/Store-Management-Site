@@ -5,6 +5,11 @@ const Schema = mongoose.Schema;
 const validShifts = ['morning', 'evening'];
 
 const Shifts_Schema = new Schema({
+    userId: {
+        type: Number,
+        min: 1,
+        required: true
+    },
     date: {
         type: Date,
         required: true
@@ -23,10 +28,10 @@ const Shifts_Schema = new Schema({
 });
 
 function validateShift(shift) {
-    const schema = {
+    const schema = Joi.array().items({
         date: Joi.date().iso().required(),
         shift: Joi.string().valid(validShifts).required()
-    };
+    });
 
     return Joi.validate(shift, schema);
 }

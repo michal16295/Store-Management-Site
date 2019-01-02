@@ -1,5 +1,5 @@
 import { authHeader } from '../helpers';
-import * as request from './req.options'
+import * as request from './req.options';
 
 const serverAddress = "http://localhost:5000";
 

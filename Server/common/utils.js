@@ -4,15 +4,15 @@ exports.resetTime = function(date) {
     return date;
 }
 
-exports.getSunday = function() {
-    const sunday = new Date();
+exports.getSunday = function(date) {
+    const sunday = new Date(date);
     const day = sunday.getDay();
     sunday.setDate(sunday.getDate() - day);
     return this.resetTime(sunday);
 }
 
-exports.getThursday = function() {
-    const thursday = new Date();
+exports.getThursday = function(date) {
+    const thursday = new Date(date);
     const day = thursday.getDay();
     thursday.setDate(thursday.getDate() - day + 4);
     return this.resetTime(thursday);

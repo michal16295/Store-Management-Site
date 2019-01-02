@@ -138,7 +138,6 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
 });
 
 router.put("/update/:id",[auth], async(req, res)=>{
-    console.log(req.body);
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
     

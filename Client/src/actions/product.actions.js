@@ -1,5 +1,5 @@
-import { productConstants } from '../constants';//TODO
-import { productService } from '../services';//TODO
+import { productConstants } from '../constants';
+import { productService } from '../services';
 import { alertActions } from './';
 
 export const productsActions ={

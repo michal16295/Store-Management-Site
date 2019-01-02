@@ -126,7 +126,7 @@ function mapStateToProps(state) {
     if (message) {
         setTimeout(() => {
             window.location.reload();
-        }, 1000)
+        }, 1000);
     }
 
     return {
