@@ -15,16 +15,16 @@ router.put("/", [auth, admin], async(req, res)=>{
     endDate.setHours(23, 59, 59, 999);
 
     const logs = await PurchasLogs.find({ date: { $lte: endDate, $gte: startDate} })
-        .populate('product_id', ['quantity']).select('-_id -__v');
+        .populate('product_id', ['quantity']).select('-_id -__v').sort('date');
 
     let totalBuy = 0;
     let totalSell = 0;
 
     logs.forEach(log => {
         if (log.direction === 'buy') {
-            totalBuy += log.price;
+            totalBuy += log.price * log.quantity;
         } else {
-            totalSell += log.price;
+            totalSell += log.price * log.quantity;
         }
     });
 

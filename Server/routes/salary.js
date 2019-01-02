@@ -34,7 +34,7 @@ router.put("/:id", [auth, adminOrWorker], async(req, res)=>{
     if ((new Date()).valueOf() < endMonth.valueOf())
         return res.status(400).send('The month has not ended yet to create the salary log');
 
-    const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }});
+    const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }}).sort('date');
     if (!shifts) return res.status(400).send("Error getting shifts");
 
     const refs = await User.find({referral: userId, createDate: { $lte: endMonth, $gte: startMonth }});
