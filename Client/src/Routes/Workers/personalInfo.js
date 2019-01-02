@@ -17,6 +17,7 @@ class personalInfo extends React.Component {
           firstName:'',
           lastName:'',
           phone: '',
+          points: 0,
           user: null
         }
 
@@ -57,6 +58,7 @@ class personalInfo extends React.Component {
       if (!user && this.state.user) {
           user = this.state.user;
       }
+
       const { firstName, lastName, phone } = this.state;
       let info = null;
       if (user) {
@@ -67,6 +69,8 @@ class personalInfo extends React.Component {
                 <div className="product">Name: {user.firstName + " " + user.lastName}</div>
                 <div className="product">Phone: {user.phone}</div>
                 <div className="product">Role: {user.role}</div>
+                {user.role === "customer" ? <div className="product">Points: {user.points}</div> : null}
+
             </div>
           <div class="container-login100-form-btn">
           <button class="login100-form-btn"  onClick={this.handleEdit}>
@@ -93,8 +97,8 @@ class personalInfo extends React.Component {
                 <button class="login100-form-btn"  onClick={this.handleSubmit}>
                   Submit
                 </button><br/>
-                <a class="login100-form-btn" style={{ textDecoration: 'none' }} href="/" >Cancel</a>
           </div>
+          <a id="resetButton" href="/" >Cancel</a>
         </div>);
       }
         return (

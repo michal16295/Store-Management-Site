@@ -26,6 +26,18 @@ export function products(state = {}, action) {
       return { 
         error: action.error
       };
+    case productConstants.BUY_PRODUCT_REQUEST:
+      return {
+        id: action.id
+      };
+    case productConstants.BUY_PRODUCT_SUCCESS:
+      return {
+        message: action.message
+      };
+    case productConstants.BUY_PRODUCT_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }

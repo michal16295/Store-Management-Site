@@ -9,7 +9,8 @@ export const productService = {
     getProducts,
     getProduct,
     orderProduct,
-    deleteProduct
+    deleteProduct,
+    buyProduct
 
 };
 
@@ -67,6 +68,17 @@ function deleteProduct(productId) {
     }).catch(err => {
         return Promise.reject(err);
     });
+}
+function buyProduct(id, quantity) {
+    const requestOptions = request.putRequest({quantity});
+    return fetch(serverAddress + '/products/sell/' + id, requestOptions)
+        .then(handleResponse)
+        .then(message => {
+            return message;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
 }
 
 function handleResponse(response) {

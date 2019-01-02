@@ -96,8 +96,9 @@ class workerEdit extends React.Component {
                 <button class="login100-form-btn"  onClick={this.handleSubmit}>
                   Submit
                 </button><br/>
-                <a class="login100-form-btn" style={{ textDecoration: 'none' }} href="/" >Cancel</a>
+                
           </div>
+          <a id="resetButton" href="/" >Cancel</a>
         </div>);
       }
         return (

@@ -4,6 +4,7 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css';
+import '../../css/button.scss';
 import { Link, Redirect } from 'react-router-dom';
 
 import { productsActions } from '../../actions';
@@ -43,13 +44,14 @@ class productsList extends React.Component {
 
     render() {
         const {products} = this.props;
+        const {role} = this.props;
         let productsArray = [(
             <tr id='0' key='0'>
                 <th>ID:</th>
                 <th>Name:</th>
                 <th>Quantity:</th>
                 <th>Price:</th>
-                <th>Order</th>
+                {role ==="admin" || role === "customer" ? <th>Order</th> : null}
             </tr>
         )];
         if (products) {
@@ -62,8 +64,9 @@ class productsList extends React.Component {
                             <th>{product.quantity}</th>
                             <th>{product.sellingPrice}</th>
                             <th>
-                                <a className="fas fa-plus-circle fa-2x" style={{color: "lime", textDecoration: "none"}} href={`/Order/${product.id}`} title="Order items to store" />
-                                <button className="fas fa-minus-circle fa-2x" style={{color: "red", textDecoration: "none"}} name="id" value = {product.id} onClick={this.handleDelete.bind(this, product.id, product.quantity)} title="Delete product from database" />
+                                {role === "customer" ? <a className="buttonR" href={`/Buy/${product.id}`} title="buy item">Buy</a> : null}
+                                {role ==="admin" ? <a className="fas fa-plus-circle fa-2x" style={{color: "lime", textDecoration: "none"}} href={`/Order/${product.id}`} title="Order items to store" /> : null}
+                               {role === "admin" ? <button className="fas fa-minus-circle fa-2x" style={{color: "red", textDecoration: "none"}} name="id" value = {product.id} onClick={this.handleDelete.bind(this, product.id, product.quantity)} title="Delete product from database" /> : null}
                             </th>
                         </tr>
                     );
@@ -91,10 +94,12 @@ class productsList extends React.Component {
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     const { items } = state.products;
+    const { role } = state.authentication.user;
     return {
         message: message,
         products: items,
-        error: error
+        error: error,
+        role: role
     };
 }
 

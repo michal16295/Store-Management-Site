@@ -98,6 +98,9 @@ class RateWorkers extends React.Component {
       <div className="limiter">
         <div className="container-login100">
           <div className="wrap-login100">
+          <span class="login100-form-title p-b-34 p-t-27">
+                        Rate The Workers
+          </span>
             {list}
             {this.props.message ? (
               <div id="success-msg">{this.props.message.message}</div>

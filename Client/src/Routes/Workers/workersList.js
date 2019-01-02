@@ -28,6 +28,7 @@ class workersList extends React.Component {
 
     render() {
         const {workers} = this.props;
+        const {role} = this.props;
         let info = null;
         let workersArray = [(
             <tr id='0' key='0'>
@@ -35,7 +36,7 @@ class workersList extends React.Component {
                 <th>First Name:</th>
                 <th>Last Name:</th>
                 <th>Phone:</th>
-                <th></th>
+                {role === "admin" ? <th></th> : null}
             </tr>
         )];
         let edit = (<div>
@@ -49,9 +50,9 @@ class workersList extends React.Component {
                                 <th>{worker.firstName}</th>
                                 <th>{worker.lastName}</th>
                                 <th>{worker.phone}</th>
-                                <th>
+                                {role === "admin" ?<th>
                                     <a className="buttonR" href={`/worker/${worker.id}`}>View</a>
-                                </th>
+                                </th> : null}
                             </tr>
                         );
                         workersArray.push(row);
@@ -80,10 +81,12 @@ class workersList extends React.Component {
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     const { items } = state.users;
+    const { role } = state.authentication.user;
     return {
         message: message,
         workers: items,
-        error: error
+        error: error,
+        role: role
     };
 }
 

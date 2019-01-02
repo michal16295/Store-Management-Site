@@ -77,7 +77,7 @@ router.get('/', [auth], async(req, res)=>{
 });
 
 router.get('/:id', [auth], async(req, res)=>{
-    const products = await Product.findOne({id: req.params.id }).select("-_id -__v -sellingPrice");
+    const products = await Product.findOne({id: req.params.id }).select("-_id -__v");
     if(!products) return res.status(404).send("ERROR - Finding products");
     return res.status(200).send(products);
 });

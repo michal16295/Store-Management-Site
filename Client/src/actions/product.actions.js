@@ -7,7 +7,8 @@ export const productsActions ={
     getProducts,
     getProduct,
     orderProduct,
-    deleteProduct
+    deleteProduct,
+    buyProduct
 };
 
 function addProduct(product){
@@ -115,4 +116,25 @@ function deleteProduct(productId){
     function request(product) { return { type: productConstants.DELETE_PRODUCT_REQUEST, product } }
     function success(message) { return { type: productConstants.DELETE_PRODUCT_REQUEST, message } }
     function failure(error) { return { type: productConstants.DELETE_PRODUCT_FAILURE, error } }
+}
+function buyProduct(id, quantity){
+    return dispatch => {
+        dispatch(request(id));
+
+        productService.buyProduct(id, quantity)
+            .then(
+                message =>{
+                    dispatch(success(message));
+                    dispatch(alertActions.success(message));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+
+            );
+    };
+    function request(id) { return { type: productConstants.BUY_PRODUCT_REQUEST, id} }
+    function success(message) { return { type: productConstants.BUY_PRODUCT_SUCCESS, message } }
+    function failure(error) { return { type: productConstants.BUY_PRODUCT_FAILURE, error } }
 }
