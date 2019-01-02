@@ -14,7 +14,8 @@ class Buy extends React.Component {
 
         this.state = {
             quantity: 0,
-            total: 0
+            total: 0,
+            product: null
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -49,9 +50,13 @@ class Buy extends React.Component {
     }
 
     render() {
-        const {product} = this.props;
+        let {product} = this.props;
         let prod = null;
+        if(!product && this.state.product){
+            product = this.state.product;
+        }
         if (product) {
+            this.state.product = product;
             prod = (
                 <div>
                     <div className="product-cont">
@@ -90,6 +95,11 @@ class Buy extends React.Component {
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     const { item } = state.products;
+    if (message) {
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    }
     return {
         message: message,
         error: error,
