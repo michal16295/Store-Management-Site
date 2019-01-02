@@ -33,7 +33,6 @@ class searchCustomer extends React.Component {
         }
         
     }
-
     render() {
         const { id, submitted } = this.state;
         const { customer } = this.props;

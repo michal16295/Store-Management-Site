@@ -50,7 +50,7 @@ class workersList extends React.Component {
                                 <th>{worker.lastName}</th>
                                 <th>{worker.phone}</th>
                                 <th>
-                                    <a className="buttonR" href={`/edit/${worker.id}`}>Edit</a>
+                                    <a className="buttonR" href={`/worker/${worker.id}`}>View</a>
                                 </th>
                             </tr>
                         );

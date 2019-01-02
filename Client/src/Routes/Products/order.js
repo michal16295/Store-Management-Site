@@ -88,7 +88,6 @@ class Order extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state);
     const { error, message } = state.alert;
     const { item } = state.products;
     return {
