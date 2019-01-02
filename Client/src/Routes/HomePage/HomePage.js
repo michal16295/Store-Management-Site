@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/index';
 import '../../css/homepage.scss';
 
 class HomePage extends React.Component {
   handleDeleteUser(id) {
-    return e => this.props.dispatch(userActions.delete(id));
+    return () => this.props.dispatch(userActions.delete(id));
   }
 
   render() {
-    const { user, users } = this.props;
+    const { user } = this.props;
     if (!user) {
       window.location.reload();
     }
