@@ -1,5 +1,6 @@
 
 import { userConstants } from '../constants';
+import { alertActions } from '../actions';
 
 export function users(state = {}, action) {
   switch (action.type) {
@@ -29,15 +30,17 @@ export function users(state = {}, action) {
       };
     case userConstants.UPDATE_USER_REQUEST:
       return {
-        
+        items: state.items
       };
     case userConstants.UPDATE_USER_SUCCESS:
       return {
-        items: action.message
+        message: action.message,
+        items: state.items
       };
     case userConstants.UPDATE_USER_FAILURE:
       return { 
-        error: action.error
+        error: action.error,
+        items: state.items
       };
     case userConstants.GET_WORKER_REQUEST:
       return {
