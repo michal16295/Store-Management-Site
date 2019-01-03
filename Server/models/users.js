@@ -11,6 +11,11 @@ const userSchema = new Schema({
         min: 1,
         required: true
     },
+    referral: {
+        type: Number,
+        min: 1,
+        required: true
+    },
     firstName: {
         type: String,
         required: true,
@@ -41,7 +46,11 @@ const userSchema = new Schema({
         minlength: 10,
         maxlength: 10
     },
-    points: Number
+    points: Number,
+    createDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 userSchema.methods.generateAuthToken = function() {

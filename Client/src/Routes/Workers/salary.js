@@ -12,19 +12,28 @@ class personalInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          edit: false,
-          firstName:'',
-          lastName:'',
-          phone: '',
-          points: 0,
-          user: null
+            year: 0,
+            month: 0,
+            months: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ]
         }
 
         this.handleEdit = this.handleEdit.bind(this);
-        this.loadWorker = this.loadWorker.bind(this);
+        this.loadSalary = this.loadSalary.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.loadWorker(props.userId);
     }
 
     handleEdit(e) {
@@ -47,36 +56,21 @@ class personalInfo extends React.Component {
       }
     }
 
-    loadWorker(workerId) {
+    loadSalary(workerId) {
+        const date = {
+            month: this.state.month,
+            year: this.state.year
+        }
         const { dispatch } = this.props;
-        dispatch(userActions.getWorker(workerId));
+        dispatch(userActions.getSalary(workerId, date));
     }
 
     render() {
-      let { user } = this.props;
-      if (!user && this.state.user) {
-          user = this.state.user;
-      }
-
-      const { firstName, lastName, phone } = this.state;
+      const { salary } = this.state;
+      const showMenu = (<div></div>); // TODO change from here
       let info = null;
       if (user) {
-        this.state.user = user; // Don't use setState because we don't need to re-render
-        info = !this.state.edit ? (<div>
-            <div className="product-cont">
-                <div className="product">ID: {user.id}</div>
-                <div className="product">Name: {user.firstName + " " + user.lastName}</div>
-                <div className="product">Phone: {user.phone}</div>
-                <div className="product">Role: {user.role}</div>
-                {user.role === "customer" ? <div className="product">Points: {user.points}</div> : null}
-
-            </div>
-          <div class="container-login100-form-btn">
-          <button class="login100-form-btn"  onClick={this.handleEdit}>
-            Edit
-          </button><br/>
-          </div>
-      </div>) : (<div>
+        info = (<div>
           <form method="put" class="login100-form validate-form">
           <div id="personal-info" class="wrap-input100" >ID: {user.id}</div>
            <label id="personal-info"  class="wrap-input100 validate-input" data-validate="Enter First Name">First Name: 
@@ -108,7 +102,7 @@ class personalInfo extends React.Component {
                         <i class="fas fa-info-circle fa-2x " ></i>
                     </span>
                     <span class="login100-form-title p-b-34 p-t-27">
-                        Personal Info
+                        Salary
                     </span>
                         {info}
                         {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
@@ -121,20 +115,11 @@ class personalInfo extends React.Component {
 }
 function mapStateToProps(state) {
     const { error, message } = state.alert;
-    const { id } = state.authentication.user;
-    let items = null;
-    if (state.users) {
-      items = state.users.items;
-    }
-    if (message) {
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
-    }
+    const { salary } = state.users;
 
     return {
         message: message,
-        userId: id,
+        salary: salary,
         user: items,
         error: error,
     };

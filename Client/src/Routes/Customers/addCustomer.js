@@ -11,13 +11,16 @@ import { userActions } from '../../actions';
 class addCustomer extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             user:{
                 firstName: '',
                 lastName: '',
                 phone: '',
-                id: ''
-            }
+                id: '',
+                referral: ''
+            },
+            
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,6 +43,9 @@ class addCustomer extends React.Component {
 
         this.setState({ submitted: true });
         const { user } = this.state;
+        if(user.referral === ''){
+            this.state.user.referral = parseInt(this.props.id);
+        }
         const { dispatch } = this.props;
         if (user.firstName && user.lastName && user.phone && user.id) {
             dispatch(userActions.newCustomer(user));
@@ -48,6 +54,7 @@ class addCustomer extends React.Component {
 
     render() {
         const { user, submitted } = this.state;
+        const refText = "Referral: " + this.props.id;
         return (
             <div class="limiter">
                 <div class="container-login100">
@@ -91,6 +98,11 @@ class addCustomer extends React.Component {
                         }
                         <span class="focus-input100" ><i id="icon" class="fas fa-phone"/></span>
                         </div>
+                        <div class="wrap-input100 validate-input" data-validate="Enter Referral">
+                        <input class="input100" type="text" name="referral" placeholder={refText} value={user.referral} onChange={this.handleChange}/>
+                        <span className="focus-input100" ><i class="fas fa-user-friends fa-2x"></i></span>
+                        </div>
+
                         <div class="container-login100-form-btn">
                             <button class="login100-form-btn" onClick={this.handleSubmit}>
                             Submit
@@ -109,10 +121,12 @@ class addCustomer extends React.Component {
 
 function mapStateToProps(state) {
     const { error, message } = state.alert;
-    console.log(state);
+    const { id } = state.authentication.user;
+
     return {
         message: message,
-        error: error
+        error: error,
+        id: id
     };
 }
 

@@ -17,3 +17,13 @@ exports.getThursday = function(date) {
     thursday.setDate(thursday.getDate() - day + 4);
     return this.resetTime(thursday);
 }
+
+exports.startMonth = function(year, month) {
+    return new Date(year, month, 1, 0, 0, 0, 0);
+}
+
+exports.endMonth = function(year, month) {
+    let date = new Date(year, month + 1, 1, 23, 59, 59, 999);
+    date.setDate(date.getDate() - 1);
+    return date;
+}

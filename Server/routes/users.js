@@ -6,6 +6,7 @@ const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
+const utils = require('../common/utils');
  
 router.post("/login" , async(req , res) => {
     const { error } = validate(req.body);
@@ -74,17 +75,27 @@ router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
     let user = await User.findOne({ id: req.body.id});
     if(user) return res.status(400).send("User already exists");
 
-
     const salt = await bcrypt.genSalt(10);
     const newPassword = await bcrypt.hash("123456", salt);
 
+    const ref = await User.findOne({id: req.body.referral});
+    if(!ref) return res.status(404).send("Referral not found");
+    if(ref.role === 'customer'){
+        await User.updateOne({id: req.body.referral}, {
+            $inc: {
+                points: 100
+            }
+        });
+    }
     user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phone: req.body.phone,
         id: req.body.id,
         password: newPassword,
-        points: 30
+        points: 500,
+        referral: req.body.referral
+
     }
     user = await User.create(user);
     if (!user) return res.status(400).send("ERROR - User wasn't created!");
@@ -112,7 +123,8 @@ router.post("/newWorker" ,[auth, admin], async(req, res) => {
         phone: req.body.phone,
         id: req.body.id,
         password: newPassword,
-        role: 'worker'
+        role: 'worker',
+        referral: 1
     }
     user = await User.create(user);
     if (!user) return res.status(400).send("ERROR - User wasn't created!");
@@ -186,6 +198,57 @@ router.get("/customer/:id", [auth, adminOrWorker], async(req, res)=>{
     return res.status(200).send(customer); 
 });
 
+router.put("/salary/:id", [auth, adminOrWorker], async(req, res)=>{
+    const { error } = validateSalary(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    let userId = parseInt(req.params.id);
+    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
+
+    let user = await User.findOne({id: userId, role:"worker"}).select('-_id -password');
+    if(!user) return res.status(404).send("The user not found");
+
+    if (!req.user.role !== 'admin' && user.id != req.user.id) 
+        return res.status(403).send('Access denied');
+
+    const endMonth = utils.endMonth(req.body.year, req.body.month);
+    const startMonth = utils.startMonth(req.body.year, req.body.month);
+
+    const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }});
+    if (!shifts) return res.status(400).send("Error getting shifts");
+
+    const refs = await User.find({referral: userId, createDate: { $lte: endMonth, $gte: startMonth }});
+    if (!refs) return res.status(400).send("Error getting referrals");
+
+    const basis = 300;
+    let salary = [];
+    let total = 0;
+
+    for (shift in shifts) {
+        let refs = 0;
+        for (ref in refs) {
+            if (ref.date.valueOf() == shift.date.valueOf()) {
+                refs++;
+            }
+        }
+        const s = {
+            base: basis,
+            date: shift.date,
+            bonus: refs * 100,
+            total: basis + refs * 100
+        }
+        total += s.total
+        salary.push(s);
+    }
+
+    const response = {
+        total,
+        salary
+    }
+
+    return res.status(200).send(response); 
+});
+
 function ValidateResetPassword(req){
     const schema = {
         id: Joi.number().required(),
@@ -205,13 +268,23 @@ function validate(req){
 
 function ValidateNewUser(req){
     const schema = {
-        id: Joi.number().required(),
+        id: Joi.number().min(1).required(),
         firstName: Joi.string().min(3).max(255).required(),
         lastName: Joi.string().min(3).max(255).required(),
-        phone: Joi.string().min(10).max(10).regex(/^\d+$/).required()
+        phone: Joi.string().min(10).max(10).regex(/^\d+$/).required(),
+        referral: Joi.number().min(1).required()
     };
     return Joi.validate(req , schema);
 }
+
+function validateSalary(req){
+    const schema = {
+        month: Joi.number().min(1).max(12).required(),
+        year: Joi.nunmber().min(2000).max(2100).required()
+    };
+    return Joi.validate(req , schema);
+}
+
 function ValidateUpdate(req) {
     let firstNameCheck = Joi.string().min(3).max(255).required();
     let lastNameCheck = Joi.string().min(3).max(255).required();
