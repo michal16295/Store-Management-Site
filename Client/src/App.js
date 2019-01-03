@@ -32,18 +32,17 @@ class App extends React.Component {
     super(props);
 
     const { dispatch } = this.props;
-    history.listen((location, action) => {
+    history.listen(() => {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
   }
 
   render() {
-    const { alert } = this.props;
     return [
       <Navbar />,
       <Router history={history}>
-        <div style={{ paddingTop: 59 + 'px', zIndex: 1 }}>
+        <div style={{ zIndex: 1 }}>
           <PrivateRoute exact path="/" component={HomePage} />
           <PrivateRoute path="/addCustomer" component={addCustomer} />
           <PrivateRoute path="/addProduct" component={addProduct} />

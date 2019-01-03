@@ -1,6 +1,4 @@
-
 import { userConstants } from '../constants';
-import { alertActions } from '../actions';
 
 export function users(state = {}, action) {
   switch (action.type) {
@@ -13,19 +11,17 @@ export function users(state = {}, action) {
         items: action.users
       };
     case userConstants.GETALL_FAILURE:
-      return { 
+      return {
         error: action.error
       };
     case userConstants.GETWORKERS_REQUEST:
-      return {
-        
-      };
+      return {};
     case userConstants.GETWORKERS_SUCCESS:
       return {
         items: action.workers
       };
     case userConstants.GETWORKERS_FAILURE:
-      return { 
+      return {
         error: action.error
       };
     case userConstants.UPDATE_USER_REQUEST:
@@ -38,20 +34,18 @@ export function users(state = {}, action) {
         items: state.items
       };
     case userConstants.UPDATE_USER_FAILURE:
-      return { 
+      return {
         error: action.error,
         items: state.items
       };
     case userConstants.GET_WORKER_REQUEST:
-      return {
-        
-      };
+      return {};
     case userConstants.GET_WORKER_SUCCESS:
       return {
         items: action.worker
       };
     case userConstants.GET_WORKER_FAILURE:
-      return { 
+      return {
         error: action.error
       };
     case userConstants.GET_SALARY_REQUEST:
@@ -67,28 +61,24 @@ export function users(state = {}, action) {
         error: action.error
       };
     case userConstants.GET_CUSTOMER_REQUEST:
-      return {
-        
-      };
+      return {};
     case userConstants.GET_CUSTOMER_SUCCESS:
       return {
         items: action.customer
       };
     case userConstants.GET_CUSTOMER_FAILURE:
-      return { 
+      return {
         error: action.error
       };
 
     case userConstants.GET_RATINGS_REQUEST:
-      return {
-        
-      };
+      return {};
     case userConstants.GET_RATINGS_SUCCESS:
       return {
         items: action.ratings
       };
     case userConstants.GET_RATINGS_FAILURE:
-      return { 
+      return {
         error: action.error
       };
     case userConstants.DELETE_REQUEST:
@@ -96,9 +86,7 @@ export function users(state = {}, action) {
       return {
         ...state,
         items: state.items.map(user =>
-          user.id === action.id
-            ? { ...user, deleting: true }
-            : user
+          user.id === action.id ? { ...user, deleting: true } : user
         )
       };
     case userConstants.DELETE_SUCCESS:
@@ -107,7 +95,7 @@ export function users(state = {}, action) {
         items: state.items.filter(user => user.id !== action.id)
       };
     case userConstants.DELETE_FAILURE:
-      // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
+      // remove 'deleting:true' property and add 'deleteError:[error]' property to user
       return {
         ...state,
         items: state.items.map(user => {
@@ -122,6 +110,6 @@ export function users(state = {}, action) {
         })
       };
     default:
-      return state
+      return state;
   }
 }
