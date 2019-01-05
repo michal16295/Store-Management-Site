@@ -18,7 +18,8 @@ export const userService = {
     updateUser,
     getCustomer,
     getSalary,
-    getCustomers
+    getCustomers,
+    getReferralsCustomers
 
 };
 
@@ -216,6 +217,18 @@ function getSalary(workerId, date) {
 function getCustomers() {
     const requestOptions = request.getRequest();
     return fetch(serverAddress + '/users/customers/', requestOptions)
+        .then(handleResponse)
+        .then(customers => {
+            return customers;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+}
+
+function getReferralsCustomers(userId) {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/users/addedCustomers/' + userId, requestOptions)
         .then(handleResponse)
         .then(customers => {
             return customers;

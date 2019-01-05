@@ -107,6 +107,17 @@ export function users(state = {}, action) {
         error: action.error
       };
 
+    case userConstants.GET_REFERRALS_CUSTOMERS_REQUEST:
+      return {};
+    case userConstants.GET_REFERRALS_CUSTOMERS_SUCCESS:
+      return {
+        items: action.customers
+      };
+    case userConstants.GET_REFERRALS_CUSTOMERS_FAILURE:
+      return {
+        error: action.error
+      };
+
     default:
       return state;
   }

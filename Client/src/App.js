@@ -27,6 +27,7 @@ import { Buy } from './Routes/Products/buyProduct';
 //import { salary } from './Routes/Workers/salary';
 import { customersList } from './Routes/Customers/CustomersList';
 import sLocation from './Routes/Customers/sLocation';
+import { referralsCustomers } from './Routes/Customers/referralCustomers';
 
 class App extends React.Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class App extends React.Component {
           <PrivateRoute path="/searchCustomer" component={searchCustomer} />
           <PrivateRoute path="/customers" component={customersList} />
           <PrivateRoute path="/worker/*" component={workerEdit} />
+          <PrivateRoute path="/referralCustomers" component={referralsCustomers} />
           <PrivateRoute path="/Buy/*" component={Buy} />
           <Route path="/login" component={LoginPage} />
           <Route path="/reset" component={ResetPassword} />

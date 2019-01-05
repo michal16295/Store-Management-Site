@@ -18,7 +18,8 @@ export const userActions = {
     updateUser,
     getCustomer,
     getSalary,
-    getCustomers
+    getCustomers,
+    getReferralsCustomers
 
 };
 
@@ -323,6 +324,26 @@ function getCustomers(){
     function request() { return { type: userConstants.GET_CUSTOMERS_REQUEST } }
     function success(customers) { return { type: userConstants.GET_CUSTOMERS_SUCCESS, customers } }
     function failure(error) { return { type: userConstants.GET_CUSTOMERS_FAILURE, error } }
+}
+function getReferralsCustomers(userId){
+    return dispatch => {
+        dispatch(request());
+
+        userService.getReferralsCustomers(userId)
+            .then(
+                customers => { 
+                    dispatch(success(customers));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.GET_REFERRALS_CUSTOMERS_REQUEST } }
+    function success(customers) { return { type: userConstants.GET_REFERRALS_CUSTOMERS_SUCCESS, customers } }
+    function failure(error) { return { type: userConstants.GET_REFERRALS_CUSTOMERS_FAILURE, error } }
 }
 
 
