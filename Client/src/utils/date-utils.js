@@ -10,3 +10,8 @@ export function resetTime(date) {
     d.setHours(10, 0 ,0, 0);
     return d;
 }
+
+export function formatDate(date) {
+    date = new Date(date);
+    return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+}

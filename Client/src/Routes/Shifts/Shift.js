@@ -33,7 +33,6 @@ class Shift extends Component {
     this.removeShift = this.removeShift.bind(this);
     this.dateGreaterEqThanToday = this.dateGreaterEqThanToday.bind(this);
     this.getDate = this.getDate.bind(this);
-    this.format = this.format.bind(this);
 
     this.loadShifts = this.loadShifts.bind(this);
     this.loadShifts(0);
@@ -172,17 +171,12 @@ class Shift extends Component {
     dispatch(shiftActions.createShifts(this.props.shifts, this.state.selected, this.props.user));
   }
 
-  format(date) {
-    date = new Date(date);
-    return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-  }
-
   render() {
     const { shifts } = this.props;
     const dates = [];
     for (let i = 0; i < 7; i++) {
     const sunday = new Date(this.state.sunday);
-      dates.push(<th key={i} style={{textAlign: 'center'}}>{this.format(sunday.setDate(sunday.getDate() + i))}</th>)
+      dates.push(<th key={i} style={{textAlign: 'center'}}>{utils.formatDate(sunday.setDate(sunday.getDate() + i))}</th>)
     }
     const headers = this.state.days.map((day, index) => {
       return <td key={index} style={{textAlign: 'center'}}>{day}</td>;

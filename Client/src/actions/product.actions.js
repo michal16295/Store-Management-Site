@@ -9,7 +9,8 @@ export const productsActions ={
     orderProduct,
     deleteProduct,
     buyProduct,
-    getProfit
+    getProfit,
+    getOrderHistory
 };
 
 function addProduct(product){
@@ -158,4 +159,26 @@ function getProfit(startDate, endDate) {
     function request() { return { type: productConstants.GET_PROFIT_REQUEST } }
     function success(profit) { return { type: productConstants.GET_PROFIT_SUCCESS, profit } }
     function failure(error) { return { type: productConstants.GET_PROFIT_FAILURE, error } }
+}
+
+
+function getOrderHistory(){
+    return dispatch => {
+        dispatch(request());
+
+        productService.getOrderHistory()
+            .then(
+                products => { 
+                    dispatch(success(products));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: productConstants.GET_HISTORY_REQUEST} }
+    function success(products) { return { type: productConstants.GET_HISTORY_SUCCESS, products  } }
+    function failure(error) { return { type: productConstants.GET_HISTORY_FAILURE, error } }
 }

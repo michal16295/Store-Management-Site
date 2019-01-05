@@ -8,6 +8,7 @@ export default function CustomerMenu() {
 
       <div className="dropdown-content">
       <a href="/personalInfo">Personal Info</a>
+        <a href="/history">Order History</a>
         <a href="/RateWorkers">Workers</a>
         <a href="/products">Products</a>
         <a href="/referralCustomers">Customers Brought</a>

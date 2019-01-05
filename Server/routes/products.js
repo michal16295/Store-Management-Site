@@ -4,6 +4,7 @@ const { User } = require('../models/users');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
+const customer = require('../middlewares/customer');
 const admin = require('../middlewares/admin');
 const adminOrWorker = require('../middlewares/adminOrWorker');
 const Joi = require('joi');
@@ -54,7 +55,9 @@ router.put('/buy/:id', [auth, admin], async (req, res) => {
   const product = await Product.findOne({ id: productID });
   if (!product) return res.status(404).send('The product was not found');
   purchaseLog = {
+    name: product.name,
     price: product.buyingPrice,
+    user_id: req.user.id,
     product_id: product._id,
     quantity: req.body.quantity,
     date: new Date(),
@@ -74,6 +77,12 @@ router.put('/buy/:id', [auth, admin], async (req, res) => {
   };
 
   return res.status(200).send(response);
+});
+
+router.get('/history/', [auth, customer], async (req, res) => {
+  const products = await PurchasLogs.find({ user_id: req.user.id }).select('-_id -__v');
+  if (!products) return res.status(404).send('ERROR - Finding products');
+  return res.status(200).send(products);
 });
 
 router.get('/', [auth], async (req, res) => {
@@ -106,8 +115,10 @@ router.put('/sell/:id', [auth], async (req, res) => {
   if (product.quantity <= 0) return res.status(400).send('Product no available');
 
   purchaseLog = {
+    name: product.name,
     price: product.sellingPrice,
     product_id: product._id,
+    user_id: customer.id,
     quantity: req.body.quantity,
     date: new Date(),
     direction: 'sell'

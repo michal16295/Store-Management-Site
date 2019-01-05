@@ -11,7 +11,8 @@ export const productService = {
     orderProduct,
     deleteProduct,
     buyProduct,
-    getProfit
+    getProfit,
+    getOrderHistory
 
 };
 
@@ -121,3 +122,15 @@ function getProfit(startDate, endDate) {
             return Promise.reject(err);
         });
 } 
+
+function getOrderHistory() {
+    const requestOptions = request.getRequest();
+    return fetch(serverAddress + '/products/history', requestOptions)
+        .then(handleResponse)
+        .then(products => {
+            return products;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+}

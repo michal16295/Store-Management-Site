@@ -4,7 +4,7 @@ import '../../css/LoginPage.css'
 import '../../fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import '../../fonts/fontawesome-free-5.5.0-web/css/all.css';
 import '../../css/navbar.css';
-
+import * as utils from '../../utils/date-utils';
 import { userActions } from '../../actions';
 
 
@@ -33,7 +33,6 @@ class salary extends React.Component {
             years: [2019,2018]
         }
 
-        this.formatDate = this.formatDate.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -61,11 +60,6 @@ class salary extends React.Component {
             dispatch(userActions.getSalary(userId, date));
         }
     }
-
-    formatDate(date) {
-        date = new Date(date);
-        return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-      }
 
     render() {
         const { user, salary } = this.props;
@@ -97,7 +91,7 @@ class salary extends React.Component {
             const headers = [(<td>Date:</td>),(<td>Base:</td>),(<td>Bonus:</td>),(<td>Total:</td>)];
             const table = salary.salary.map(s => {
                 return (<tr>
-                    <td>{this.formatDate(s.date)}</td>
+                    <td>{utils.formatDate(s.date)}</td>
                     <td>{s.base}</td>
                     <td>{s.bonus}</td>
                     <td>{s.total}</td>

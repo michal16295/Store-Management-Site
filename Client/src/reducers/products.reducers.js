@@ -50,6 +50,18 @@ export function products(state = {}, action) {
       return { 
         error: action.error
       };
+
+    case productConstants.GET_HISTORY_REQUEST:
+      return {
+      };
+    case productConstants.GET_HISTORY_SUCCESS:
+      return {
+        items: action.products
+      };
+    case productConstants.GET_HISTORY_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }
