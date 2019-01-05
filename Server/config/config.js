@@ -5,6 +5,7 @@ const products = require('../routes/products');
 const shifts = require('../routes/shifts');
 const rating = require('../routes/rating');
 const salary = require('../routes/salary');
+const profit = require('../routes/profit');
 
 // Secret Key
 const secretKey = () => {
@@ -19,6 +20,8 @@ const setRoutes = (app) => {
     app.use('/shifts', shifts);
     app.use('/ratings', rating);
     app.use('/salary', salary);
+    app.use('/profit', profit);
+
 }
 
 // Connect to Database
