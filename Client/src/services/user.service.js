@@ -203,7 +203,7 @@ function getCustomer(customerId) {
 
 function getSalary(workerId, date) {
     const requestOptions = request.putRequest(date);
-    return fetch(serverAddress + '/users/salary/' + workerId, requestOptions)
+    return fetch(serverAddress + '/salary/' + workerId, requestOptions)
         .then(handleResponse)
         .then(salary => {
             return salary;

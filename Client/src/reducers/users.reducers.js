@@ -14,6 +14,17 @@ export function users(state = {}, action) {
       return {
         error: action.error
       };
+    case userConstants.GET_SALARY_REQUEST:
+      return {
+      };
+    case userConstants.GET_SALARY_SUCCESS:
+      return {
+        salary: action.salary.salaryData
+      };
+    case userConstants.GET_SALARY_FAILURE:
+      return {
+        error: action.error
+      };
     case userConstants.GETWORKERS_REQUEST:
       return {};
     case userConstants.GETWORKERS_SUCCESS:

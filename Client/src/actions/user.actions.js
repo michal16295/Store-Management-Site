@@ -291,6 +291,7 @@ function getSalary(workerId, date) {
             .then(
                 salary => { 
                     dispatch(success(salary));
+                    dispatch(alertActions.error(null));
                 },
                 error => {
                     dispatch(failure(error.toString()));

@@ -17,8 +17,8 @@ export default function AdminMenu() {
         <a href="/addProduct">Add Product</a>
         <a href="/customers">Customers</a>
         <a href="/addCustomer">Add Customers</a>
-        <a href="searchCustomer">Search Customer</a>
-        <a>Salary</a>
+        <a href="/searchCustomer">Search Customer</a>
+        <a href='/salary'>Salary</a>
         
       </div>
     </div>

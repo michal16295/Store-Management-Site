@@ -12,7 +12,9 @@ class salary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: 0,
+            userId: '',
+            submitted: false,
+            year: 2019,
             month: 0,
             months: [
                 'January',
@@ -31,64 +33,99 @@ class salary extends React.Component {
             years: [2019,2018]
         }
 
-        this.handleEdit = this.handleEdit.bind(this);
-        this.loadSalary = this.loadSalary.bind(this);
+        this.formatDate = this.formatDate.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    handleEdit(e) {
-      e.preventDefault();
-      this.setState({edit: !this.state.edit});
-    }
     handleChange(e){
-      const { name, value } = e.target;
-      this.setState({ [name]: value });
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     }
     handleSubmit(e){
-      let user = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        phone: this.state.phone
-      }
-      const { dispatch } = this.props;
-      if (user) {
-          dispatch(userActions.updateUser(this.props.userId, user));
-      }
+        e.preventDefault();
+
+        this.setState({ submitted: true });
+        const { user, dispatch } = this.props;
+
+        let userId = this.state.userId;
+        if (user.role !== 'admin') {
+            userId = user.id;
+        }
+        const date = {
+            month: parseInt(this.state.month)+1,
+            year: parseInt(this.state.year)
+        }
+        
+        if (date && userId) {
+            const { dispatch } = this.props;
+            dispatch(userActions.getSalary(userId, date));
+        }
     }
 
-    loadSalary(workerId) {
-        const date = {
-            month: this.state.month,
-            year: this.state.year
-        }
-        const { dispatch } = this.props;
-        dispatch(userActions.getSalary(workerId, date));
-    }
+    formatDate(date) {
+        date = new Date(date);
+        return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+      }
 
     render() {
-      const { salary } = this.state;
-      const showMenu = (<div class="login100-form">Choose date: <select>
-          {this.state.months.map((m, index) => {
-              return (<option value={index}>{m}</option>)
-          })}
-          </select><select>
-          {this.state.years.map(y => {
-              return (<option value={y}>{y}</option>)
-          })}
-          </select></div>); // TODO change from here
-      
+        const { user, salary } = this.props;
+        const { userId, submitted } = this.state;
+        const showMenu = (<div className="login100-form"><form>
+            {user && user.role === 'admin' ? 
+            <input className="input100" type="text" name="userId" placeholder="Worker ID" value={userId} onChange={this.handleChange}/>
+            : null}
+            {user && user.role === 'admin' && submitted && !userId &&
+                <div id="empty-fields" >ID is required</div>
+            }
+            <select name="month" onChange={this.handleChange}>
+                {this.state.months.map((m, index) => {
+                    return (<option key={index} value={index}>{m}</option>)
+                })}
+            </select><select name="year" onChange={this.handleChange}>
+                {this.state.years.map(y => {
+                    return (<option key={y} value={y}>{y}</option>)
+                })}
+            </select>
+            </form><div className="container-login100-form-btn">
+                <button className="login100-form-btn" onClick={this.handleSubmit}>
+                Submit
+                </button><br/>
+            </div></div>);
+        let salaryData = null;
+        
+        if (salary) {
+            const headers = [(<td>Date:</td>),(<td>Base:</td>),(<td>Bonus:</td>),(<td>Total:</td>)];
+            const table = salary.salary.map(s => {
+                return (<tr>
+                    <td>{this.formatDate(s.date)}</td>
+                    <td>{s.base}</td>
+                    <td>{s.bonus}</td>
+                    <td>{s.total}</td>
+                </tr>);
+            });
+            salaryData = (<div className="salary"><table>
+                <tbody>
+                  <tr>{headers}</tr>
+                  {table}
+                </tbody>
+              </table>
+              Rating Bonus: {salary.ratingBonus}<br/>
+              Total: {salary.total}
+              </div>);
+        }
         return (
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100">
-                    <span class="login100-form-logo">
-                        <i class="fas fa-info-circle fa-2x " ></i>
+                    <span className="login100-form-logo">
+                        <i className="fas fa-info-circle fa-2x " ></i>
                     </span>
-                    <span class="login100-form-title p-b-34 p-t-27">
+                    <span className="login100-form-title p-b-34 p-t-27">
                         Salary
                     </span>
                         {showMenu}
+                        <br/>
+                        {salaryData}
                         {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
                         {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                     </div>
@@ -100,11 +137,13 @@ class salary extends React.Component {
 function mapStateToProps(state) {
     const { error, message } = state.alert;
     const { salary } = state.users;
+    const { user } = state.authentication;
 
     return {
         message: message,
         salary: salary,
         error: error,
+        user: user
     };
 }
 

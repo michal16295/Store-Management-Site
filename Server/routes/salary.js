@@ -31,7 +31,7 @@ router.put("/:id", [auth, adminOrWorker], async(req, res)=>{
     const endMonth = utils.endMonth(req.body.year, req.body.month - 1);
     const startMonth = utils.startMonth(req.body.year, req.body.month - 1);
 
-    if ((new Date(2020, 10, 1)).valueOf() < endMonth.valueOf())
+    if ((new Date()).valueOf() < endMonth.valueOf())
         return res.status(400).send('The month has not ended yet to create the salary log');
 
     const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }});
