@@ -61,14 +61,13 @@ class Buy extends React.Component {
                 <div>
                     <div className="product-cont">
                         <div className="product">Name: {product.name}</div>
-                        <div className="product">Current Quantity: {product.quantity}</div>
                         <div className="product">Buying price: {product.sellingPrice}</div>
                     </div>
                     <div className="product-input">Input: <input className="order-input" type="text" name="quantity" placeholder="Quantity" value={this.state.quantity} onChange={this.handleChange}/>
                     </div>
                     <div className="product">Total price: {this.state.total}</div>
                    <div className = "container-login100-form-btn">
-                        <button class="login100-form-btn" onClick={this.handleSubmit} >Submit</button>
+                        <button class="login100-form-btn" onClick={this.handleSubmit} disabled={product.quantity <= 0}>Submit</button>
                     </div> 
                 </div>
             );

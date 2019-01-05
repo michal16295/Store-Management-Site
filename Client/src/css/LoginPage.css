@@ -486,6 +486,10 @@ iframe {
   transform: translateY(6px);
 }
 
+login100-form-btn:disabled,
+button[disabled] {
+  cursor: not-allowed;
+}
 
 
 

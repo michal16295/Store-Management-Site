@@ -103,6 +103,7 @@ router.put('/sell/:id', [auth], async (req, res) => {
     return res.status(400).send('Quantity should be a positive number');
   if (customer.points < product.sellingPrice * req.body.quantity)
     return res.status(400).send('Insufficient funds');
+  if (product.quantity <= 0) return res.status(400).send('Product no available');
 
   purchaseLog = {
     price: product.sellingPrice,

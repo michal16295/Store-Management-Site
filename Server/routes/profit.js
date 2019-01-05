@@ -1,98 +1,47 @@
-const { Product } = require('../models/products');
-const { Shift } = require('../models/shifts');
 const { PurchasLogs } = require('../models/purchase_logs');
-const { Ratings } = require('../models/rating');
-const adminOrWorker = require('../middlewares/adminOrWorker');
+const admin = require('../middlewares/admin');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
-const utils = require('../common/utils');
 
-router.put("/profit", [auth, adminOrWorker], async(req, res)=>{
+router.put("/", [auth, admin], async(req, res)=>{
     const { error } = validateProfit(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let products = await Product.find({id: userId, role:"worker"}).select('-password');
-    if(!user) return res.status(404).send("The user not found");
+    const startDate = new Date(req.body.startDate);
+    startDate.setHours(0,0,0,0);
+    const endDate = new Date(req.body.endDate);
+    endDate.setHours(23, 59, 59, 999);
 
-    if (!(req.user.role === 'admin'))
-        return res.status(403).send('Access denied');
+    const logs = await PurchasLogs.find({ date: { $lte: endDate, $gte: startDate} })
+        .populate('product_id', ['name', 'quantity']).select('-_id -__v');
 
-    let purchaseLog = await PurchasLogs.findOne({ direction: 'sell', month: req.body.month, year: req.body.year}).select('-_id salaryData');
-    
-    if (salaryLog) return res.status(200).send(salaryLog);
+    let totalBuy = 0;
+    let totalSell = 0;
 
-    if (!salaryLog && req.user.role !== 'admin') return res.status(404).send('The salary is not ready');
-
-    const endMonth = utils.endMonth(req.body.year, req.body.month - 1);
-    const startMonth = utils.startMonth(req.body.year, req.body.month - 1);
-
-    if ((new Date()).valueOf() < endMonth.valueOf())
-        return res.status(400).send('The month has not ended yet to create the salary log');
-
-    const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }});
-    if (!shifts) return res.status(400).send("Error getting shifts");
-
-    const refs = await User.find({referral: userId, createDate: { $lte: endMonth, $gte: startMonth }});
-    if (!refs) return res.status(400).send("Error getting referrals");
-
-    const rates = await Ratings.find({worker_id: user._id, date: { $lte: endMonth, $gte: startMonth }});
-    if (!rates) return res.status(400).send("Error getting ratings");
-
-    const basis = 300;
-    let ratingBonus = 0;
-    let salary = [];
-    let total = 0;
-
-    for (let i = 0; i < shifts.length; ++i) {
-        let referrals = 0;
-        let shift = shifts[i];
-        for (let j = 0; j < refs.length; ++j) {
-            if (utils.resetTime(refs[j].createDate).valueOf() == utils.resetTime(shift.date).valueOf()) {
-                referrals++;
-            }
+    logs.forEach(log => {
+        if (log.direction === 'buy') {
+            totalBuy += log.price;
+        } else {
+            totalSell += log.price;
         }
-        const s = {
-            base: basis,
-            date: shift.date,
-            bonus: referrals * 100,
-            total: basis + referrals * 100
-        }
-        total += s.total
-        salary.push(s);
+    });
+
+    const data = {
+        totalBuy,
+        totalSell,
+        total: totalSell - totalBuy,
+        logs
     }
 
-    let rating = 0;
-    if (rates.length >= 10) {
-        for (let i = 0; i < rates.length; ++i) {
-            rating += rates[i].rating;
-        }
-        rating /= rates.length;
-        if (rating > 4) ratingBonus = 100;
-    }
-
-    const response = {
-        total,
-        ratingBonus,
-        salary
-    }
-
-    const model = {
-        user_id: user._id,
-        salaryData: response,
-        month: req.body.month,
-        year: req.body.year
-    }
-    await SalaryLogs.create(model);
-
-    return res.status(200).send({salaryData: response}); 
+    return res.status(200).send({profitData: data}); 
 });
 
 function validateProfit(req){
     const schema = {
-        month: Joi.number().min(1).max(12).required(),
-        year: Joi.number().min(2000).max(2100).required()
+        startDate: Joi.date().iso().required(),
+        endDate: Joi.date().iso().required()
     };
     return Joi.validate(req , schema);
 }
