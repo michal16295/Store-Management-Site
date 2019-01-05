@@ -1,4 +1,4 @@
-const { Product } = require('../models/product');
+const { Product, ValidateNewProduct } = require('../models/product');
 const { PurchasLogs } = require('../models/purchase_logs');
 const { User } = require('../models/users');
 const express = require('express');
@@ -7,7 +7,6 @@ const auth = require('../middlewares/auth');
 const customer = require('../middlewares/customer');
 const admin = require('../middlewares/admin');
 const adminOrWorker = require('../middlewares/adminOrWorker');
-const Joi = require('joi');
 
 //adding a new product to the stock
 router.post('/newProduct', [auth, adminOrWorker], async (req, res) => {
@@ -148,18 +147,5 @@ router.put('/sell/:id', [auth], async (req, res) => {
 
   return res.status(200).send(response);
 });
-
-function ValidateNewProduct(req) {
-  const schema = {
-    id: Joi.number().required(),
-    name: Joi.string()
-      .min(2)
-      .max(255)
-      .required(),
-    buyingPrice: Joi.number().required(),
-    sellingPrice: Joi.number().required()
-  };
-  return Joi.validate(req, schema);
-}
 
 module.exports = router;

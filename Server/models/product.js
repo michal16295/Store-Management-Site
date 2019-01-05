@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const Schema = mongoose.Schema;
 
@@ -30,4 +31,18 @@ const Product_Schema = new Schema({
     }
 });
 
+function ValidateNewProduct(req) {
+    const schema = {
+      id: Joi.number().required(),
+      name: Joi.string()
+        .min(2)
+        .max(255)
+        .required(),
+      buyingPrice: Joi.number().min(0).required(),
+      sellingPrice: Joi.number().min(0).required()
+    };
+    return Joi.validate(req, schema);
+  }
+
 exports.Product = mongoose.model('Product' , Product_Schema);
+exports.ValidateNewProduct = ValidateNewProduct;

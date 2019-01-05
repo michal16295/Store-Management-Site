@@ -28,14 +28,34 @@ describe('utils.resetTime', () => {
 
 describe('utils.getSunday', () => {
     it('should return sunday of this week', () => {
-        const date = utils.getSunday();
+        const date = utils.getSunday(new Date());
         expect(date.getDay()).toBe(0);
     });
 });
 
 describe('utils.getThursday', () => {
     it('should return thursday of this week', () => {
-        const date = utils.getThursday();
+        const date = utils.getThursday(new Date());
         expect(date.getDay()).toBe(4);
+    });
+});
+
+describe('utils.startMonth', () => {
+    it('should return first day of month', () => {
+        const year = 2019;
+        const month = 1;
+        const date = utils.startMonth(year, month);
+        const compareTo = new Date(2019, 1, 1, 0, 0, 0, 0);
+        expect(date.valueOf()).toBe(compareTo.valueOf());
+    });
+});
+
+describe('utils.endMonth', () => {
+    it('should return last day of month', () => {
+        const year = 2019;
+        const month = 0;
+        const date = utils.endMonth(year, month);
+        const compareTo = new Date(2019, 0, 31, 23, 59, 59, 999);
+        expect(date.valueOf()).toBe(compareTo.valueOf());
     });
 });
