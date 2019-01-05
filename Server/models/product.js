@@ -33,9 +33,11 @@ const Product_Schema = new Schema({
 
 function ValidateNewProduct(req) {
   const schema = {
-    id: Joi.number().required(),
-    name: Joi.string()
+    id: Joi.number()
       .min(1)
+      .required(),
+    name: Joi.string()
+      .min(2)
       .max(255)
       .required(),
     buyingPrice: Joi.number()
