@@ -19,7 +19,7 @@ export const userActions = {
     getCustomer,
     getSalary,
     getCustomers,
-    getReferralsCustomers
+    getReferralsCustomers,
 
 };
 

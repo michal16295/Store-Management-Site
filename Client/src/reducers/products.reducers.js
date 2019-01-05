@@ -38,6 +38,18 @@ export function products(state = {}, action) {
       return { 
         error: action.error
       };
+
+    case productConstants.GET_PROFIT_REQUEST:
+      return {
+      };
+    case productConstants.GET_PROFIT_SUCCESS:
+      return {
+        profit: action.profit
+      };
+    case productConstants.GET_PROFIT_FAILURE:
+      return { 
+        error: action.error
+      };
     default:
       return state
   }

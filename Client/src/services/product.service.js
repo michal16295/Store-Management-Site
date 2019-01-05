@@ -10,7 +10,8 @@ export const productService = {
     getProduct,
     orderProduct,
     deleteProduct,
-    buyProduct
+    buyProduct,
+    getProfit
 
 };
 
@@ -104,4 +105,19 @@ function handleResponse(response) {
 
         return data;
     });
-}  
+} 
+function getProfit(startDate, endDate) {
+    const date ={
+        startDate,
+        endDate
+    };
+    const requestOptions = request.putRequest(date);
+    return fetch(serverAddress + '/profit/' , requestOptions)
+        .then(handleResponse)
+        .then(profit => {
+            return profit;
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+} 

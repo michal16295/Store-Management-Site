@@ -8,7 +8,8 @@ export const productsActions ={
     getProduct,
     orderProduct,
     deleteProduct,
-    buyProduct
+    buyProduct,
+    getProfit
 };
 
 function addProduct(product){
@@ -137,4 +138,24 @@ function buyProduct(id, quantity){
     function request(id) { return { type: productConstants.BUY_PRODUCT_REQUEST, id} }
     function success(message) { return { type: productConstants.BUY_PRODUCT_SUCCESS, message } }
     function failure(error) { return { type: productConstants.BUY_PRODUCT_FAILURE, error } }
+}
+function getProfit(startDate, endDate) {
+    return dispatch => {
+        dispatch(request());
+
+        productService.getProfit(startDate, endDate)
+            .then(
+                profit => { 
+                    dispatch(success(profit));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: productConstants.GET_PROFIT_REQUEST } }
+    function success(profit) { return { type: productConstants.GET_PROFIT_SUCCESS, profit } }
+    function failure(error) { return { type: productConstants.GET_PROFIT_FAILURE, error } }
 }
