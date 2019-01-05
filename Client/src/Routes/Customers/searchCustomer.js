@@ -61,7 +61,7 @@ class searchCustomer extends React.Component {
                             Submit
                             </button><br/>
                         </div>
-                            {this.props.customer ? 
+                            {this.props.customer? 
                                            (<div>
                                             <div className="product-cont">
                                                 <div className="product">ID: {customer.id}</div>

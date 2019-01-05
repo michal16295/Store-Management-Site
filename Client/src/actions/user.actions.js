@@ -17,7 +17,8 @@ export const userActions = {
     getWorker,
     updateUser,
     getCustomer,
-    getSalary
+    getSalary,
+    getCustomers
 
 };
 
@@ -268,6 +269,7 @@ function getCustomer(customerId) {
             .then(
                 customer => { 
                     dispatch(success(customer));
+                    dispatch(alertActions.error(null))
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -300,6 +302,27 @@ function getSalary(workerId, date) {
     function request() { return { type: userConstants.GET_SALARY_REQUEST } }
     function success(salary) { return { type: userConstants.GET_SALARY_SUCCESS, salary } }
     function failure(error) { return { type: userConstants.GET_SALARY_FAILURE, error } }
+}
+
+function getCustomers(){
+    return dispatch => {
+        dispatch(request());
+
+        userService.getCustomers()
+            .then(
+                customers => { 
+                    dispatch(success(customers));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.GET_CUSTOMERS_REQUEST } }
+    function success(customers) { return { type: userConstants.GET_CUSTOMERS_SUCCESS, customers } }
+    function failure(error) { return { type: userConstants.GET_CUSTOMERS_FAILURE, error } }
 }
 
 

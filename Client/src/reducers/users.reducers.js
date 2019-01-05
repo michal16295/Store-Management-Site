@@ -64,7 +64,8 @@ export function users(state = {}, action) {
       return {};
     case userConstants.GET_CUSTOMER_SUCCESS:
       return {
-        items: action.customer
+        items: action.customer,
+        error: null
       };
     case userConstants.GET_CUSTOMER_FAILURE:
       return {
@@ -91,6 +92,17 @@ export function users(state = {}, action) {
         message: action.message
       };
     case userConstants.DELETE_WORKER_FAILURE:
+      return {
+        error: action.error
+      };
+
+    case userConstants.GET_CUSTOMERS_REQUEST:
+      return {};
+    case userConstants.GET_CUSTOMERS_SUCCESS:
+      return {
+        items: action.customers
+      };
+    case userConstants.GET_CUSTOMERS_FAILURE:
       return {
         error: action.error
       };
