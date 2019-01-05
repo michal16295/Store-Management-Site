@@ -16,7 +16,8 @@ class addWorker extends React.Component {
         firstName: '',
         lastName: '',
         phone: '',
-        id: ''
+        id: '',
+        referral: 1
       }
     };
 

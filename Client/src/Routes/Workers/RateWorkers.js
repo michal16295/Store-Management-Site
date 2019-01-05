@@ -26,9 +26,8 @@ class RateWorkers extends React.Component {
     const { dispatch } = this.props;
     dispatch(userActions.getWorkers());
   }
-  onStarClick(prevValue, name) {
+  onStarClick(prevValue, nextValue ,name) {
     const { rating } = this.state;
-    console.log(name);
     this.setState({
       rating: {
         ...rating,
@@ -60,7 +59,6 @@ class RateWorkers extends React.Component {
       </tr>
     ];
     if (workers) {
-      console.log(workers);
       workers.forEach(worker => {
         let row = (
           <tr id={worker.id} key={worker.id}>
@@ -113,7 +111,7 @@ class RateWorkers extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  console.log(state.users.items);
+
   const { error, message } = state.alert;
   const { items } = state.users;
   return {

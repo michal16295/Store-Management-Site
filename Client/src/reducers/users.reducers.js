@@ -64,7 +64,8 @@ export function users(state = {}, action) {
       return {};
     case userConstants.GET_CUSTOMER_SUCCESS:
       return {
-        items: action.customer
+        items: action.customer,
+        error: null
       };
     case userConstants.GET_CUSTOMER_FAILURE:
       return {
@@ -81,34 +82,31 @@ export function users(state = {}, action) {
       return {
         error: action.error
       };
-    case userConstants.DELETE_REQUEST:
-      // add 'deleting:true' property to user being deleted
+      
+    case userConstants.DELETE_WORKER_REQUEST:
       return {
-        ...state,
-        items: state.items.map(user =>
-          user.id === action.id ? { ...user, deleting: true } : user
-        )
-      };
-    case userConstants.DELETE_SUCCESS:
-      // remove deleted user from state
-      return {
-        items: state.items.filter(user => user.id !== action.id)
-      };
-    case userConstants.DELETE_FAILURE:
-      // remove 'deleting:true' property and add 'deleteError:[error]' property to user
-      return {
-        ...state,
-        items: state.items.map(user => {
-          if (user.id === action.id) {
-            // make copy of user without 'deleting:true' property
-            const { deleting, ...userCopy } = user;
-            // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
-          }
 
-          return user;
-        })
       };
+    case userConstants.DELETE_WORKER_SUCCESS:
+      return {
+        message: action.message
+      };
+    case userConstants.DELETE_WORKER_FAILURE:
+      return {
+        error: action.error
+      };
+
+    case userConstants.GET_CUSTOMERS_REQUEST:
+      return {};
+    case userConstants.GET_CUSTOMERS_SUCCESS:
+      return {
+        items: action.customers
+      };
+    case userConstants.GET_CUSTOMERS_FAILURE:
+      return {
+        error: action.error
+      };
+
     default:
       return state;
   }

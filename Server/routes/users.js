@@ -7,7 +7,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const utils = require('../common/utils');
- 
+
+//Login 
 router.post("/login" , async(req , res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -32,7 +33,7 @@ router.post("/login" , async(req , res) => {
     };
     res.send(response);
 });
-
+//reset password
 router.post("/reset" , async(req, res) => {
     const { error } = ValidateResetPassword(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -67,7 +68,7 @@ router.post("/reset" , async(req, res) => {
 
     return res.status(200).send(response);    
 });
-
+//creating a new customer
 router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
     const { error } = ValidateNewUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -105,7 +106,7 @@ router.post("/newCustomer" ,[auth, adminOrWorker],  async(req, res) => {
     }
     return res.status(200).send(response);    
 });
-
+//creating a new worker
 router.post("/newWorker" ,[auth, admin], async(req, res) => {
     const { error } = ValidateNewUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -134,7 +135,7 @@ router.post("/newWorker" ,[auth, admin], async(req, res) => {
     }
     return res.status(200).send(response);
 });
-
+//deleting a user by id
 router.delete("/:id", [auth, admin], async(req, res)=>{
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
@@ -148,7 +149,7 @@ router.delete("/:id", [auth, admin], async(req, res)=>{
 
     return res.status(200).send(response); 
 });
-
+//Updating data of a given user 
 router.put("/update/:id",[auth], async(req, res)=>{
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
@@ -175,7 +176,7 @@ router.put("/update/:id",[auth], async(req, res)=>{
 
     return res.status(200).send(response); 
 });
-
+//Workers list
 router.get("/", [auth], async(req, res)=>{
     const users = await User.find({role: "worker"}).select('-_id -__v -password -role');
 
@@ -183,6 +184,15 @@ router.get("/", [auth], async(req, res)=>{
 
     return res.status(200).send(users);
 });
+//Customers List
+router.get("/customers", [auth], async(req, res)=>{
+    const users = await User.find({role: "customer"}).select('-_id -__v -password -role');
+
+    if(!users) return res.status(404).send("Error finding customers");
+
+    return res.status(200).send(users);
+});
+//finding a single worker by id
 router.get("/:id", [auth], async(req, res)=>{
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
@@ -190,6 +200,7 @@ router.get("/:id", [auth], async(req, res)=>{
     if(!user) return res.status(404).send("The user not found");
     return res.status(200).send(user); 
 });
+//finding a single customer by id
 router.get("/customer/:id", [auth, adminOrWorker], async(req, res)=>{
     let userId = parseInt(req.params.id);
     if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
