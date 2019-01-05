@@ -208,6 +208,15 @@ router.get("/customer/:id", [auth, adminOrWorker], async(req, res)=>{
     if(!customer) return res.status(404).send("The customer not found");
     return res.status(200).send(customer); 
 });
+//referral customers list 
+router.get("/addedCustomers/:id", [auth], async(req, res)=>{
+    let userId = parseInt(req.params.id);
+    const users = await User.find({role: "customer", referral: userId}).select('-_id -__v -password -role');
+    
+    if(!users) return res.status(404).send("Error finding customers");
+
+    return res.status(200).send(users);
+});
 
 function ValidateResetPassword(req){
     const schema = {

@@ -10,6 +10,7 @@ export default function CustomerMenu() {
       <a href="/personalInfo">Personal Info</a>
         <a href="/RateWorkers">Workers</a>
         <a href="/products">Products</a>
+        <a href="/referralCustomers">Customers Brought</a>
         <a href="/sLocation">Our Location</a>
       </div>
     </div>

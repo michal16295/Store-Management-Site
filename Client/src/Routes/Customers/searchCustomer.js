@@ -69,6 +69,7 @@ class searchCustomer extends React.Component {
                                                 <div className="product">Phone: {customer.phone}</div>
                                                 <div className="product">Role: {customer.role}</div>
                                                 <div className="product">Points: {customer.points}</div>
+                                                <div className="product">Referral: {customer.referral}</div>
                                             </div>
                                       </div>) : null}
                             {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}

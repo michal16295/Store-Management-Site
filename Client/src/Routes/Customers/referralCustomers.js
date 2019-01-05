@@ -9,12 +9,9 @@ import { Redirect } from 'react-router-dom';
 
 import { userActions } from '../../actions';
 
-class customersList extends React.Component {
+class referralsCustomers extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      edit: false
-    };
 
     this.loadCustomers = this.loadCustomers.bind(this);
     this.loadCustomers();
@@ -22,22 +19,21 @@ class customersList extends React.Component {
 
   loadCustomers() {
     const { dispatch } = this.props;
-    dispatch(userActions.getCustomers());
+    dispatch(userActions.getReferralsCustomers(this.props.id));
   }
 
   render() {
     const { customers } = this.props;
-    const { role } = this.props;
+    const { id } = this.props;
     let customersArray = [
       <tr id="0" key="0">
         <th>ID:</th>
         <th>First Name:</th>
         <th>Last Name:</th>
         <th>Phone:</th>
-        <th>Points:</th>
+        <th>Points Received:</th>
       </tr>
     ];
-    let edit = <div>{edit ? <Redirect to="/" /> : null}</div>;
     if (customers) {
         customers.forEach(customer => {
         let row = (
@@ -46,7 +42,7 @@ class customersList extends React.Component {
             <th>{customer.firstName}</th>
             <th>{customer.lastName}</th>
             <th>{customer.phone}</th>
-            <th>{customer.points}</th>
+            <th style= {{color: "lime"}}>100</th>
           </tr>
         );
         customersArray.push(row);
@@ -64,7 +60,7 @@ class customersList extends React.Component {
             <span class="logo-star">
               <i class="fas fa-list fa-2x" />
             </span>
-            <span class="login100-form-title p-b-34 p-t-27">Customers List</span>
+            <span class="login100-form-title p-b-34 p-t-27">Customers Brought</span>
             {list}
             {this.props.message ? (
               <div id="success-msg">{this.props.message.message}</div>
@@ -81,14 +77,14 @@ class customersList extends React.Component {
 function mapStateToProps(state) {
   const { error, message } = state.alert;
   const { items } = state.users;
-  const { role } = state.authentication.user;
+  const { id } = state.authentication.user;
   return {
     message: message,
     customers: items,
     error: error,
-    role: role
+    id: id
   };
 }
 
-const connectedcustomersList = connect(mapStateToProps)(customersList);
-export { connectedcustomersList as customersList };
+const connectedreferralsCustomers = connect(mapStateToProps)(referralsCustomers);
+export { connectedreferralsCustomers as referralsCustomers };
