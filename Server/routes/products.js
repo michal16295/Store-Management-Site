@@ -99,15 +99,15 @@ router.put('/sell/:id', [auth], async (req, res) => {
   if (!product) return res.status(404).send('The product was not found');
   let customer = await User.findOne({ id: req.user.id });
   if (!customer) return res.status(404).send('Customer not found');
-  if (req.body.quantity < 0)
-    return res.status(400).send('Input cannot be negetive number');
+  if (req.body.quantity <= 0)
+    return res.status(400).send('Quantity should be a positive number');
   if (customer.points < product.sellingPrice * req.body.quantity)
     return res.status(400).send('Insufficient funds');
 
   purchaseLog = {
     price: product.sellingPrice,
     product_id: product._id,
-    quantity: 1,
+    quantity: req.body.quantity,
     date: new Date(),
     direction: 'sell'
   };

@@ -198,57 +198,6 @@ router.get("/customer/:id", [auth, adminOrWorker], async(req, res)=>{
     return res.status(200).send(customer); 
 });
 
-router.put("/salary/:id", [auth, adminOrWorker], async(req, res)=>{
-    const { error } = validateSalary(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    let userId = parseInt(req.params.id);
-    if (isNaN(userId) || userId <= 0) return res.status(404).send("ID must be a positive number");
-
-    let user = await User.findOne({id: userId, role:"worker"}).select('-_id -password');
-    if(!user) return res.status(404).send("The user not found");
-
-    if (!req.user.role !== 'admin' && user.id != req.user.id) 
-        return res.status(403).send('Access denied');
-
-    const endMonth = utils.endMonth(req.body.year, req.body.month);
-    const startMonth = utils.startMonth(req.body.year, req.body.month);
-
-    const shifts = await Shift.find({userId: userId, date: { $lte: endMonth, $gte: startMonth }});
-    if (!shifts) return res.status(400).send("Error getting shifts");
-
-    const refs = await User.find({referral: userId, createDate: { $lte: endMonth, $gte: startMonth }});
-    if (!refs) return res.status(400).send("Error getting referrals");
-
-    const basis = 300;
-    let salary = [];
-    let total = 0;
-
-    for (shift in shifts) {
-        let refs = 0;
-        for (ref in refs) {
-            if (ref.date.valueOf() == shift.date.valueOf()) {
-                refs++;
-            }
-        }
-        const s = {
-            base: basis,
-            date: shift.date,
-            bonus: refs * 100,
-            total: basis + refs * 100
-        }
-        total += s.total
-        salary.push(s);
-    }
-
-    const response = {
-        total,
-        salary
-    }
-
-    return res.status(200).send(response); 
-});
-
 function ValidateResetPassword(req){
     const schema = {
         id: Joi.number().required(),
@@ -273,14 +222,6 @@ function ValidateNewUser(req){
         lastName: Joi.string().min(3).max(255).required(),
         phone: Joi.string().min(10).max(10).regex(/^\d+$/).required(),
         referral: Joi.number().min(1).required()
-    };
-    return Joi.validate(req , schema);
-}
-
-function validateSalary(req){
-    const schema = {
-        month: Joi.number().min(1).max(12).required(),
-        year: Joi.nunmber().min(2000).max(2100).required()
     };
     return Joi.validate(req , schema);
 }

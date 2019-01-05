@@ -8,7 +8,7 @@ import '../../css/navbar.css';
 import { userActions } from '../../actions';
 
 
-class personalInfo extends React.Component {
+class salary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +27,8 @@ class personalInfo extends React.Component {
                 'October',
                 'November',
                 'December'
-            ]
+            ],
+            years: [2019,2018]
         }
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -67,33 +68,16 @@ class personalInfo extends React.Component {
 
     render() {
       const { salary } = this.state;
-      const showMenu = (<div></div>); // TODO change from here
-      let info = null;
-      if (user) {
-        info = (<div>
-          <form method="put" class="login100-form validate-form">
-          <div id="personal-info" class="wrap-input100" >ID: {user.id}</div>
-           <label id="personal-info"  class="wrap-input100 validate-input" data-validate="Enter First Name">First Name: 
-                    <input id="personal-input" type="text" name="firstName" placeholder={user.firstName} value={firstName} onChange={this.handleChange}/>
-            </label>
-
-            <label id="personal-info" class="wrap-input100 validate-input" data-validate="Enter Last Name">Last Name: 
-                    <input id="personal-input" type="text" name="lastName" placeholder={user.lastName} value={lastName} onChange={this.handleChange}/>
-            </label>
-
-            <label id="personal-info" class="wrap-input100 validate-input" data-validate="Enter Phone Number">Phone: 
-                    <input id="personal-input" type="text" name="phone" placeholder={user.phone} value={phone} onChange={this.handleChange}/>
-            </label>
-          <div id="personal-info" class="wrap-input100">Role: {user.role}</div>
-          </form>
-          <div class="container-login100-form-btn">
-                <button class="login100-form-btn"  onClick={this.handleSubmit}>
-                  Submit
-                </button><br/>
-          </div>
-          <a id="resetButton" href="/" >Cancel</a>
-        </div>);
-      }
+      const showMenu = (<div class="login100-form">Choose date: <select>
+          {this.state.months.map((m, index) => {
+              return (<option value={index}>{m}</option>)
+          })}
+          </select><select>
+          {this.state.years.map(y => {
+              return (<option value={y}>{y}</option>)
+          })}
+          </select></div>); // TODO change from here
+      
         return (
             <div className="limiter">
                 <div className="container-login100">
@@ -104,7 +88,7 @@ class personalInfo extends React.Component {
                     <span class="login100-form-title p-b-34 p-t-27">
                         Salary
                     </span>
-                        {info}
+                        {showMenu}
                         {this.props.message ? <div id="success-msg">{this.props.message.message}</div> : null}
                         {this.props.error ? <div id="invalid-input">{this.props.error}</div> : null}
                     </div>
@@ -120,10 +104,9 @@ function mapStateToProps(state) {
     return {
         message: message,
         salary: salary,
-        user: items,
         error: error,
     };
 }
 
-const connectedPersonalInfoList = connect(mapStateToProps)(personalInfo);
-export { connectedPersonalInfoList as personalInfo }; 
+const connectedSalaryList = connect(mapStateToProps)(salary);
+export { connectedSalaryList as salary }; 

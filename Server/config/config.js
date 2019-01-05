@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const users = require('../routes/users');
 const products = require('../routes/products');
 const shifts = require('../routes/shifts');
-const rating = require('../routes/rating')
+const rating = require('../routes/rating');
+const salary = require('../routes/salary');
 
 // Secret Key
 const secretKey = () => {
@@ -17,6 +18,7 @@ const setRoutes = (app) => {
     app.use('/products', products);
     app.use('/shifts', shifts);
     app.use('/ratings', rating);
+    app.use('/salary', salary);
 }
 
 // Connect to Database
