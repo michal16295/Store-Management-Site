@@ -81,6 +81,7 @@ export function users(state = {}, action) {
       return {
         error: action.error
       };
+      
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {
